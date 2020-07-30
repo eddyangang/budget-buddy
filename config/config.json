@@ -1,27 +1,26 @@
 {
-    "development": {
-      "username": "u3zrgptfaxtspa80",
-      "password": "rpviylruo7za3kzx",
-      "database": "dzw85vdhw23prs1k",
-      "host": "127.0.0.1",
-      "port": 3306,
-      "dialect": "mysql"
-    },
-    "test": {
-        "username": "u3zrgptfaxtspa80",
-        "password": "rpviylruo7za3kzx",
-        "database": "dzw85vdhw23prs1k",
-      "host": "127.0.0.1",
-      "port": 3306,
-      "dialect": "mysql"
-    },
-    "production": {
-        "username": "u3zrgptfaxtspa80",
-        "password": "rpviylruo7za3kzx",
-        "database": "dzw85vdhw23prs1k",
-      "host": "127.0.0.1",
-      "port": 3306,
-      "dialect": "mysql"
-    }
+  "development": {
+    "username": "root",
+    "password": "password",
+    "database": "budgetbuddydb",
+    "host": "127.0.0.1",
+    "port": 3306,
+    "dialect": "mysql"
+  },
+  "test": {
+    "username": "u3zrgptfaxtspa80",
+    "password": "rpviylruo7za3kzx",
+    "database": "dzw85vdhw23prs1k",
+    "host": "127.0.0.1",
+    "port": 3306,
+    "dialect": "mysql"
+  },
+  "production": {
+    "username": "u3zrgptfaxtspa80",
+    "password": "rpviylruo7za3kzx",
+    "database": "dzw85vdhw23prs1k",
+    "host": "127.0.0.1",
+    "port": 3306,
+    "dialect": "mysql"
   }
-  
+}
