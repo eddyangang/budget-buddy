@@ -8,13 +8,12 @@ router.get("/landing",function(req,res){
 })
 
 router.get("/landing/sign-up",function(req,res){
-  console.log(userSignedIn)
   res.render("sign-up");
 })  
 
 router.post("/user",function(req,res){
-  userSignedIn = req.body;
-    console.log(currentUser);
+    userSignedIn = req.body;
+    console.log(userSignedIn);
     res.send("/user/home");
 })
 
