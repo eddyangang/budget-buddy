@@ -7,7 +7,7 @@ var app = express();
 app.use(express.static("public"));
 
 // Requiring our models for syncing
-var db = require("./models");
+// var db = require("./models"); // used in router
 
 // Parse application body
 app.use(express.urlencoded({ extended: true }));
@@ -22,8 +22,7 @@ app.set("view engine", "handlebars");
 // Import routes and give the server access to them.
 
 var routes = require("./routes/api-routes.js");
-// =======
-// var routes = require("./controllers/budgetController.js");
+
 
 
 app.use(routes);
