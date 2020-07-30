@@ -8,7 +8,8 @@ CREATE TABLE users (
     password VARCHAR(100),
     firstName VARCHAR(100),
     lastName VARCHAR(100),
-    middleName VARCHAR(100)
+    middleName VARCHAR(100),
+    email VARCHAR (100) NOT NULL
 );
 
 CREATE TABLE categories (
@@ -33,7 +34,7 @@ CREATE TABLE orders (
 	id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(100) NOT NULL,
     price DECIMAL(10,2),
-    orderData DATETIME,
+    orderDate DATETIME,
     userID INT,
     FOREIGN KEY (userID) REFERENCES users(id),
     categoryID INT,
