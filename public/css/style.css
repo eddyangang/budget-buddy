@@ -1,20 +1,22 @@
 /* styling for modals */
 .modal {
-  max-height: 90%;
-}
 
+    max-height: 90%;
+}
+  
 .modal-form-row {
-  margin-bottom: 0px;
+    margin-bottom: 0px;
 }
 
 #nav-logo {
-    padding-left: 1rem;
+      padding-left: 1rem;
 }
 
 body {
-    background-color: aliceblue;
+      background-color: aliceblue;
 }
 
 .card-panel {
-  margin-top: 3rem !important;
+    margin-top: 3rem !important;
+
 }
