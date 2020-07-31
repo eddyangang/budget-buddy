@@ -2,10 +2,7 @@ module.exports = function (sequelize, DataTypes) {
     var Orders = sequelize.define("orders", {
         name: DataTypes.STRING,
         price: DataTypes.DECIMAL(10, 2),
-        oderDate: {
-            type: 'TIMESTAMP',
-            allowNull: false
-        }
+        orderDate: DataTypes.DATE
     });
 
     Orders.associate = function (models) {
@@ -13,7 +10,7 @@ module.exports = function (sequelize, DataTypes) {
         Orders.belongsTo(models.Users, {
             // as: "user",
             foreignKey: {
-                name: "userID",
+                name: "userOrderID",
                 allowNull: false
             }
 
@@ -22,7 +19,7 @@ module.exports = function (sequelize, DataTypes) {
         Orders.belongsTo(models.Categories, {
             // as: "category",
             foreignKey: {
-                name: "categoryID",
+                name: "categoryOrderId",
                 allowNull: false
             }
         });
@@ -30,7 +27,7 @@ module.exports = function (sequelize, DataTypes) {
         Orders.belongsTo(models.Account, {
             // as: "account",
             foreignKey: {
-                name: "accountID",
+                name: "accountOrderId",
                 allowNull: false
             }
         });

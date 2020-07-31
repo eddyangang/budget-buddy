@@ -8,7 +8,7 @@ router.get("/landing", function (req, res) {
   res.render("landing");
 })
 
-router.get("/landing/sign-up",function(req,res){
+router.get("/landing/sign-up", function (req, res) {
   res.render("sign-up");
 })
 
@@ -68,32 +68,7 @@ router.get("/api/user/:id", (req, res) => {
 
 // ~~~~~POST~~~~~~
 
-// add a order for a user 
-router.post("/api/orders", (req, res) => {
-
-  // get order details. INCLUDE USER ID.
-  const order = req.body;
-
-  db.Orders.create({
-    name: order.name,
-    price: order.price,
-    orderDate: order.date,
-    userID: order.userID,
-    categoryID: order.categoryID,
-    accountID: order.accountID
-  })
-  .then( (data) => {
-    console.log(data);
-    res.json(data);
-  })
-})
-
-router.post("/user", function (req, res) {
-  userSignedIn = req.body;
-  console.log(currentUser);
-  res.send("/user/home");
-})
-
+// create a new user
 router.post("/user/new", (req, res) => {
   var newUser = req.body;
   console.log(newUser);
@@ -109,6 +84,79 @@ router.post("/user/new", (req, res) => {
   })
 
 })
+
+
+// add a order for a user 
+router.post("/api/orders/new", (req, res) => {
+
+  // get order details. INCLUDE USER ID.
+  const order = req.body;
+
+  db.Orders.create({
+      name: order.name,
+      price: order.price,
+      orderDate: order.date,
+      userOrderId: order.userOrderId,
+      categoryOrderId: order.categoryOrderId,
+      accountOrderId: order.accountOrderId
+    })
+    .then((data) => {
+      console.log(data);
+      res.json(data);
+    })
+})
+
+// add a new category for a user 
+router.post("/api/category/new", (req, res) => {
+  const category = req.body;
+  let {
+    name,
+    budget,
+    budgetUsed,
+    userCategoryId
+  } = category;
+
+  db.Categories.create({
+    name,
+    budget,
+    budgetUsed,
+    userCategoryId
+
+  }).then((data) => {
+    console.log(data);
+    res.json(data);
+  })
+
+})
+
+// Add a new account for a user 
+router.post("/api/account/new", (req, res) => {
+  const newAccount = req.body;
+  let {
+    weeklyBudget,
+    startingDate,
+    endingDate,
+    userAccountId
+  } = newAccount;
+
+  db.Account.create({
+    weeklyBudget,
+    startingDate,
+    endingDate,
+    userAccountId
+  }).then((data) => {
+    console.log(data);
+    res.json(data);
+  })
+
+})
+
+router.post("/user", function (req, res) {
+  userSignedIn = req.body;
+  console.log(currentUser);
+  res.send("/user/home");
+})
+
 // ~~~~~UPDATE~~~~~~
 
 // ~~~~~DELETE~~~~~~
