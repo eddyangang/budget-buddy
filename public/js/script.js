@@ -44,8 +44,10 @@ const newAccount = {
     endingDate: new Date(2020, 8, 20), // month is 0 indexed so 08 -> 09
     UserId: "100"
 }
+
 // $.post("/api/account/new", newAccount).then((data) => {
 //     console.log("Account Added");
+
 //     console.log(data);
 // })
 
@@ -53,11 +55,13 @@ const newAccount = {
 const newOrder = {
     name: "Shampoo",
     price: 10,
+
     orderDate: new Date(2020, 07, 31),
     UserId: "100",
     CategoriesId: 1,
     AccountId: 1
 }
+
 
 // $.post("/api/orders/new", newOrder).then(data => {
 //     console.log("Order Added");

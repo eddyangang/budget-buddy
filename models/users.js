@@ -14,7 +14,7 @@ module.exports = function (sequelize, DataTypes) {
     });
 
     Users.associate = function (models) {
-        Users.hasMany(models.Orders, {
+        Users.hasMany(models.orders, {
             onDelete: "cascade"
             // foreignKey: "userOrderId"
         });

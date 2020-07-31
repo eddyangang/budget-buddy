@@ -104,7 +104,7 @@ router.post("/user/new", (req, res) => {
 })
 
 
-// add a order for a user 
+// add a order for a user // currently not working
 router.post("/api/orders/new", (req, res) => {
 
   // get order details. INCLUDE USER ID.
