@@ -3,16 +3,16 @@
     <div class="nav-wrapper green">
       <a href="#" class="brand-logo"><img src="../images/BB_logo_wht.png" id="nav-logo" alt="" width="300" height="auto"></a>
       <ul id="nav-mobile" class="right hide-on-med-and-down">
-        <li><a href="#">Account</a></li>
+        <li><a href="/user/account">Account</a></li>
         <li>|</li>
         <li><a href="#">About</a></li>
         <li>|</li>
-        <li><a href="#">Settings</a></li>
+        <li><a href="/user/sign-out">Log Out</a></li>
       </ul>
     </div>
   </nav>
 
-<h1>{{id}}</h1>
+<h3> Welcome back {{ this.dataValues.name}} </h3>
 
 <main class="container">
     <!-- Page Content goes here -->
@@ -24,7 +24,7 @@
                     
                 </div>
                 <div class="card-action">
-                    <button class="waves-effect waves-light btn white modal-trigger blue-text text-darken-2" data-target="modal1">Modal Trigger</button>
+                    <button class="waves-effect waves-light btn white modal-trigger blue-text text-darken-2" data-target="modal1">Add Order</button>
                 </div>
             </div>
         </div>
@@ -34,7 +34,7 @@
                     <span class="card-title">Categories</span>
                 </div>   
                 <div class="card-action">
-                    <button class="waves-effect waves-light btn white modal-trigger blue-text text-darken-2" data-target="modal2">Modal Trigger</button>
+                    <button class="waves-effect waves-light btn white modal-trigger blue-text text-darken-2" data-target="modal2">Add Category</button>
                 </div>
             </div>
         </div>
@@ -52,22 +52,25 @@
     <div class="row">
     <form class="col s12">
         <div class="row modal-form-row">
-        <div class="input-field col s12">
-            <input id="item-name" type="text" class="validate">
-            <label for="item-name">Item name:</label>
-        </div>
-        </div>
-        <div class="row">
-        <div class="input-field col s12">
-            <input id="item-price" type="text" class="validate">
-            <label for="item-price">Price:</label>
-        </div>
+            <div class="input-field col s12">
+                <input id="item-name" type="text" class="validate">
+                <label for="item-name">Item name:</label>
+            </div>
         </div>
         <div class="row">
-        <div class="input-field col s12">
-            <input id="item-cat" type="text" class="validate">
-            <label for="item-cat">Category:</label>
+            <div class="input-field col s12">
+                <input id="item-price" type="text" class="validate">
+                <label for="item-price">Price:</label>
+            </div>
         </div>
+        <div class="row">
+        <label>Category</label>
+            <select class="browser-default" id = "item-category">
+                <option value="" disabled selected>Choose your category</option>
+                <option value="1">Option 1</option>
+                <option value="2">Option 2</option>
+                <option value="3">Option 3</option>
+            </select>
         </div>
     </form>
     </div>
@@ -120,7 +123,7 @@
 
 <ul>
     <li>{{ user }}</li>
-    <li>{{ this.id}} </li>
+
     <li>{{ this.firstName }}</li>
     <li> {{ this.lastName }}</li>
     <li> {{ this.username}} </li>

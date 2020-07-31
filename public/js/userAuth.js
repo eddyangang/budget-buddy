@@ -24,6 +24,14 @@ function checkState(){
     firebase.auth().signOut();
   }
 }
+
+$.get("/user/sign-out",function(){
+  console.log("received");
+  firebase.auth().signOut();
+  checkState();
+})
+
+
  // for signing into a old account
 $("#sign-in-form").on("submit",function(event){
   checkState();
