@@ -7,30 +7,11 @@ module.exports = function (sequelize, DataTypes) {
 
     Orders.associate = function (models) {
 
-        Orders.belongsTo(models.Users, {
-            // as: "user",
-            foreignKey: {
-                name: "userOrderID",
-                allowNull: false
-            }
+        Orders.belongsTo(models.Users)
 
-        });
+        Orders.belongsTo(models.Categories)
 
-        Orders.belongsTo(models.Categories, {
-            // as: "category",
-            foreignKey: {
-                name: "categoryOrderId",
-                allowNull: false
-            }
-        });
-
-        Orders.belongsTo(models.Account, {
-            // as: "account",
-            foreignKey: {
-                name: "accountOrderId",
-                allowNull: false
-            }
-        });
+        Orders.belongsTo(models.Account)
     };
 
     return Orders;
