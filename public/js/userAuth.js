@@ -36,6 +36,8 @@ $("#sign-in-form").on("submit",function(event){
   failureFlag = true;
   firebase.auth().signInWithEmailAndPassword(userEmail, userPassword).catch(function(error) {
       // Handle Errors here.
+      // failureFlag is used to make sure that there are no errors in the signing in portion 
+      // before signing in it to the database
       var errorCode = error.code;
       var errorMessage = error.message;
       console.log(errorCode);
@@ -91,41 +93,50 @@ $("#sign-up-form").on("submit",function(event){
   console.log(newUserPassword);
   firebase.auth().createUserWithEmailAndPassword(newUserEmail, newUserPassword).catch(function(error) {
       // Handle Errors here.
+      // failureFlag is used to make sure that there are no errors in the creation 
+      // before adding it to the database
+      failureFlag = true;
       var errorCode = error.code;
       var errorMessage = error.message;
       console.log(errorCode);
       console.log(errorMessage);
+      if(errorCode==="auth/email-already-in-use"){
+        failureFlag = false;
+        return alert("Email already in use");
+      }
       if(errorCode==="auth/invalid-email"){
-        return alert("Invalid email");
+        failureFlag = false;
+        return alert("Invalid Email");
       }
-      if(errorCode==="auth/user-disabled"){
-        return alert("User disabled");
+      if(errorCode==="auth/operation-not-allowed"){
+        failureFlag = false;
+        return alert("Account queries disabled.");
       }
-      if(errorCode==="auth/user-not-found"){
-        return alert("User not found.");
-      }
-      if(errorCode==="auth/wrong-password"){
-        return alert("Incorrect password.");
+      if(errorCode==="auth/weak-password"){
+        failureFlag = false;
+        return alert("Weak password.");
       }
   }).then(function(user){
-      console.log(user);
-      currentUser = firebase.auth().currentUser;
-      console.log(currentUser);
-      // Passing through the displayName userId and Email
-      var passedUser = {
-        displayName: currentUser.displayName,
-        email: currentUser.email,
-        id:currentUser.uid
+      if(failureFlag===true){
+        console.log(user);
+        currentUser = firebase.auth().currentUser;
+        console.log(currentUser);
+        // Passing through the displayName userId and Email
+        var passedUser = {
+          displayName: currentUser.displayName,
+          email: currentUser.email,
+          id:currentUser.uid
+        }
+        console.log("successfully logged into account with a UID of "+ passedUser.id );
+        $.ajax("/user/new", {
+          type: "POST",
+          data: passedUser
+        }).then(
+          function() {
+            console.log("Successfully logged in.");
+            location.replace("/user/home");
+        });
       }
-      console.log("successfully logged into account with a UID of " );
-      $.ajax("/user/new", {
-        type: "POST",
-        data: passedUser
-      }).then(
-        function() {
-          console.log("Successfully logged in.");
-          location.replace("/user/home");
-      });
     });
   
   //   after new account is created...
