@@ -1,16 +1,20 @@
 /* styling for modals */
 .modal {
-    max-height: 90%;
-  }
-  
-  .modal-form-row {
-    margin-bottom: 0px;
-  }
+  max-height: 90%;
+}
 
-  #nav-logo {
-      padding-left: 1rem;
-  }
+.modal-form-row {
+  margin-bottom: 0px;
+}
 
-  body {
-      background-color: aliceblue;
-  }
+#nav-logo {
+    padding-left: 1rem;
+}
+
+body {
+    background-color: aliceblue;
+}
+
+.card-panel {
+  margin-top: 3rem !important;
+}
