@@ -11,7 +11,12 @@ module.exports = function (sequelize, DataTypes) {
     });
 
     Account.associate = function (models) {
-        Account.belongsTo(models.Users)
+        Account.belongsTo(models.Users, {
+            foreignKey: {
+                name: "userAccountId",
+                allowNull: false
+            }
+        });
     };
 
     return Account;

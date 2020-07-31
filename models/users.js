@@ -1,32 +1,25 @@
 module.exports = function (sequelize, DataTypes) {
     var Users = sequelize.define("Users", {
-        // userID: {
-        //     type: DataTypes.STRING,
-        //     primaryKey: true
-        // },
-        id: {
-            type: DataTypes.STRING,
-            primaryKey: true
-        },
+        userID: DataTypes.STRING,
         name: DataTypes.STRING,
         email: DataTypes.STRING,
         username: DataTypes.STRING
     });
 
     Users.associate = function (models) {
-        Users.hasMany(models.Orders, {
+        Users.hasMany(models.orders, {
             onDelete: "cascade"
             // foreignKey: "userOrderId"
         });
 
         Users.hasMany(models.Account, {
-            onDelete: "cascade"
-            // foreignKey: "userAccountId"
+            onDelete: "cascade",
+            foreignKey: "userAccountId"
         });
 
         Users.hasMany(models.Categories, {
-            onDelete: "cascade"
-            // foreignKey: "userCategoryId"
+            onDelete: "cascade",
+            foreignKey: "userCategoryId"
         });
     };
     //add cascade for account
