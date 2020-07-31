@@ -3,13 +3,10 @@ CREATE DATABASE budgetbuddyDB;
 USE budgetbuddyDB;
 
 CREATE TABLE users (
-	id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    username VARCHAR(100) NOT NULL,
-    password VARCHAR(100),
-    firstName VARCHAR(100),
-    lastName VARCHAR(100),
-    middleName VARCHAR(100),
-    email VARCHAR (100) NOT NULL
+    userID VARCHAR(100) NOT NULL PRIMARY KEY,
+    name VARCHAR(100),
+    email VARCHAR (100) NOT NULL,
+    username VARCHAR(100) NOT NULL
 );
 
 CREATE TABLE categories (
@@ -17,8 +14,8 @@ CREATE TABLE categories (
     name VARCHAR(100),
     budget DECIMAL(10,2),
     budgetUsed DECIMAL(10,2),
-    userID INT,
-    FOREIGN KEY (userID) REFERENCES users(id)
+    userID VARCHAR(100),
+    FOREIGN KEY (userID) REFERENCES users(userID)
 );
 
 CREATE TABLE account (
@@ -26,8 +23,8 @@ CREATE TABLE account (
     weeklyBudget DECIMAL(11,2),
     startingDate DATETIME,
     endingDate DATETIME,
-    userID INT,
-    FOREIGN KEY (userID) REFERENCES users(id)
+    userID VARCHAR(100),
+    FOREIGN KEY (userID) REFERENCES users(userID)
 );
 
 CREATE TABLE orders (
@@ -36,7 +33,7 @@ CREATE TABLE orders (
     price DECIMAL(10,2),
     orderDate DATETIME,
     userID VARCHAR(100),
-    FOREIGN KEY (userID) REFERENCES users(id),
+    FOREIGN KEY (userID) REFERENCES users(userID),
     categoryID INT,
     FOREIGN KEY (categoryID) REFERENCES categories(id),
     accountID INT,

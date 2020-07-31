@@ -12,7 +12,7 @@ module.exports = function (sequelize, DataTypes) {
 
         Categories.belongsTo(models.Users, {
             foreignKey: {
-                name: "userID", 
+                name: "userCategoryId", 
                 allowNull: false
             }
         }),
