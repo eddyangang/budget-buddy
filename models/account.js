@@ -16,9 +16,10 @@ module.exports = function (sequelize, DataTypes) {
 
     Account.associate = function (models) {
         Account.belongsTo(models.Users, {
-            as: "account",
-            foreignKey: "accountID",
-            allowNull: false
+            foreignKey: {
+                name: "userID",
+                allowNull: false
+            }
         });
     };
 
