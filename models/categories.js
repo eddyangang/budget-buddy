@@ -1,4 +1,4 @@
-const orders = require("./orders");
+// const orders = require("./orders");
 
 module.exports = function (sequelize, DataTypes) {
     var Categories = sequelize.define("Categories", {
