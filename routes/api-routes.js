@@ -34,6 +34,11 @@ router.get("/api/user/:id", (req, res) => {
 })
 
 
+router.get("/calendar", function(req, res){
+  res.render("calendar");
+})
+
+
 // get all orders from a user. 
 router.get("/api/user/:id", (req, res) => {
   // get ID from request
@@ -153,13 +158,14 @@ router.post("/api/account/new", (req, res) => {
 
 router.post("/user", function (req, res) {
   userSignedIn = req.body;
-  console.log(currentUser);
+  console.log(userSignedIn);
   res.send("/user/home");
 })
 
 // ~~~~~UPDATE~~~~~~
 
 // ~~~~~DELETE~~~~~~
+
 
 
 module.exports = router;
