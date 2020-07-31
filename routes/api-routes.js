@@ -22,6 +22,8 @@ router.get("/user/home",function(req,res){
   res.render("index",userSignedIn);
 })
 
-
+router.get("/calendar", function(req, res){
+  res.render("calendar");
+})
 
 module.exports = router;

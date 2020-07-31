@@ -1,0 +1,16 @@
+/* styling for modals */
+.modal {
+    max-height: 90%;
+  }
+  
+  .modal-form-row {
+    margin-bottom: 0px;
+  }
+
+  #nav-logo {
+      padding-left: 1rem;
+  }
+
+  body {
+      background-color: aliceblue;
+  }

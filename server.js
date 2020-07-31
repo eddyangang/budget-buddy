@@ -7,7 +7,7 @@ var app = express();
 app.use(express.static("public"));
 
 // Requiring our models for syncing
-// var db = require("./models"); // used in router
+var db = require("./models"); // used in router
 
 // Parse application body
 app.use(express.urlencoded({ extended: true }));
