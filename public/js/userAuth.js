@@ -113,7 +113,7 @@ $("#sign-up-form").on("submit",function(event){
       console.log(currentUser);
       // Passing through the displayName userId and Email
       var passedUser = {
-        displayName: userName,
+        displayName: currentUser.displayName,
         email: currentUser.email,
         id:currentUser.uid
       }

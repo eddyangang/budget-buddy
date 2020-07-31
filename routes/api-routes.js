@@ -8,8 +8,7 @@ router.get("/landing", function (req, res) {
   res.render("landing");
 })
 
-router.get("/landing/sign-up", function (req, res) {
-  console.log(userSignedIn)
+router.get("/landing/sign-up",function(req,res){
   res.render("sign-up");
 })
 
