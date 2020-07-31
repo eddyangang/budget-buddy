@@ -13,10 +13,22 @@ router.get("/landing/sign-up", function (req, res) {
 })
 
 router.get("/user/home", function (req, res) {
-  console.log(userSignedIn)
-  res.render("index", userSignedIn);
+  console.log("this is the one!");
+  db.Users.findOne({
+    where: {
+      userID: userSignedIn.id
+    } 
+  }).then(function(data){
+    console.log(data);
+    res.render("index", data);
+  })
+  
 })
 
+router.get("/user/sign-out", function (req, res) {
+  res.render("landing");
+
+})
 // get all information on  a user
 router.get("/api/user/:id", (req, res) => {
   // get ID from request
