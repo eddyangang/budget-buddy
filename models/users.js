@@ -1,9 +1,7 @@
 module.exports = function (sequelize, DataTypes) {
     var Users = sequelize.define("Users", {
-        firstName: DataTypes.STRING,
-        lastName: DataTypes.STRING,
-        middlefirstName: DataTypes.STRING,
-        password: DataTypes.STRING,
+        userID: DataTypes.STRING,
+        name: DataTypes.STRING,
         email: DataTypes.STRING,
         username: DataTypes.STRING
     });
@@ -14,6 +12,10 @@ module.exports = function (sequelize, DataTypes) {
         });
 
         Users.hasMany(models.Account, {
+            onDelete: "cascade"
+        });
+
+        Users.hasMany(models.Categories, {
             onDelete: "cascade"
         });
     };

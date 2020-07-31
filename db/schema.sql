@@ -35,7 +35,7 @@ CREATE TABLE orders (
     name VARCHAR(100) NOT NULL,
     price DECIMAL(10,2),
     orderDate DATETIME,
-    userID INT,
+    userID VARCHAR(100),
     FOREIGN KEY (userID) REFERENCES users(id),
     categoryID INT,
     FOREIGN KEY (categoryID) REFERENCES categories(id),
