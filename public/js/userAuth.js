@@ -34,7 +34,8 @@ $("#sign-in-form").on("submit",function(event){
   var userPassword = $("#userPassword").val().trim();
   console.log(userPassword);
   failureFlag = true;
-  firebase.auth().signInWithEmailAndPassword(userEmail, userPassword).catch(function(error) {
+  firebase.auth().signInWithEmailAndPassword(userEmail, userPassword)
+  .catch(function(error) {
       // Handle Errors here.
       // failureFlag is used to make sure that there are no errors in the signing in portion 
       // before signing in it to the database
@@ -91,11 +92,11 @@ $("#sign-up-form").on("submit",function(event){
   console.log(newUserEmail);
   var newUserPassword = $("#newUserPassword").val().trim();
   console.log(newUserPassword);
+  failureFlag = true;
   firebase.auth().createUserWithEmailAndPassword(newUserEmail, newUserPassword).catch(function(error) {
       // Handle Errors here.
       // failureFlag is used to make sure that there are no errors in the creation 
       // before adding it to the database
-      failureFlag = true;
       var errorCode = error.code;
       var errorMessage = error.message;
       console.log(errorCode);
