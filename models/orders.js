@@ -2,31 +2,34 @@ module.exports = function (sequelize, DataTypes) {
     var Orders = sequelize.define("orders", {
         name: DataTypes.STRING,
         price: DataTypes.DECIMAL(10, 2),
-        oderDate: {
-            type: 'TIMESTAMP',
-            defaultValue: sequelize.literal('CURRENT_TIMESTAMP'),
-            allowNull: false
-        }
+        orderDate: DataTypes.DATE
     });
 
     Orders.associate = function (models) {
 
         Orders.belongsTo(models.Users, {
-            as: "username",
-            foreignKey: "orderID",
-            allowNull: false
+            // as: "user",
+            foreignKey: {
+                name: "userOrderID",
+                allowNull: false
+            }
+
         });
 
         Orders.belongsTo(models.Categories, {
-            as: "category",
-            foreignKey: "categoryID",
-            allowNull: false
+            // as: "category",
+            foreignKey: {
+                name: "categoryOrderId",
+                allowNull: false
+            }
         });
 
         Orders.belongsTo(models.Account, {
-            as: "account",
-            foreignKey: "accountID",
-            allowNull: false
+            // as: "account",
+            foreignKey: {
+                name: "accountOrderId",
+                allowNull: false
+            }
         });
     };
 

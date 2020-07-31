@@ -1,9 +1,7 @@
 module.exports = function (sequelize, DataTypes) {
     var Users = sequelize.define("Users", {
-        firstName: DataTypes.STRING,
-        lastName: DataTypes.STRING,
-        middlefirstName: DataTypes.STRING,
-        password: DataTypes.STRING,
+        userID: DataTypes.STRING,
+        name: DataTypes.STRING,
         email: DataTypes.STRING,
         username: DataTypes.STRING
     });
@@ -11,10 +9,17 @@ module.exports = function (sequelize, DataTypes) {
     Users.associate = function (models) {
         Users.hasMany(models.orders, {
             onDelete: "cascade"
+            // foreignKey: "userOrderId"
         });
 
         Users.hasMany(models.Account, {
-            onDelete: "cascade"
+            onDelete: "cascade",
+            foreignKey: "userAccountId"
+        });
+
+        Users.hasMany(models.Categories, {
+            onDelete: "cascade",
+            foreignKey: "userCategoryId"
         });
     };
     //add cascade for account
