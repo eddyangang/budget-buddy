@@ -13,10 +13,22 @@ router.get("/landing/sign-up", function (req, res) {
 })
 
 router.get("/user/home", function (req, res) {
-  console.log(userSignedIn)
-  res.render("index", userSignedIn);
+  console.log("this is the one!");
+  db.Users.findOne({
+    where: {
+      id: userSignedIn.id
+    } 
+  }).then(function(data){
+    console.log(data);
+    res.render("index", data);
+  })
+  
 })
 
+router.get("/user/sign-out", function (req, res) {
+  res.render("landing");
+
+})
 // get all information on  a user
 router.get("/api/user/:id", (req, res) => {
   // get ID from request
@@ -78,20 +90,21 @@ router.post("/user/new", (req, res) => {
   var newUser = req.body;
   console.log(newUser);
   db.Users.create({
-    userID: newUser.id,
+    id: newUser.id,
     email: newUser.email,
     name: newUser.displayName,
     username: newUser.displayName
-  }).then(() => {
+  }).then((user) => {
     console.log("success");
-    userSignedIn = newUser;
-    res.send(newUser)
+    userSignedIn = user;
+    // res.send(newUser)
+    res.end();
   })
 
 })
 
 
-// add a order for a user 
+// add a order for a user // currently not working
 router.post("/api/orders/new", (req, res) => {
 
   // get order details. INCLUDE USER ID.
@@ -100,10 +113,10 @@ router.post("/api/orders/new", (req, res) => {
   db.Orders.create({
       name: order.name,
       price: order.price,
-      orderDate: order.date,
-      userOrderId: order.userOrderId,
-      categoryOrderId: order.categoryOrderId,
-      accountOrderId: order.accountOrderId
+      orderDate: order.orderDate,
+      UserId: order.UserId,
+      CategoryId: order.CategoriesId,
+      AccountId: order.AccountId
     })
     .then((data) => {
       console.log(data);
@@ -118,14 +131,14 @@ router.post("/api/category/new", (req, res) => {
     name,
     budget,
     budgetUsed,
-    userCategoryId
+    UserId
   } = category;
 
   db.Categories.create({
     name,
     budget,
     budgetUsed,
-    userCategoryId
+    UserId
 
   }).then((data) => {
     console.log(data);
@@ -141,14 +154,14 @@ router.post("/api/account/new", (req, res) => {
     weeklyBudget,
     startingDate,
     endingDate,
-    userAccountId
+    UserId
   } = newAccount;
 
   db.Account.create({
     weeklyBudget,
     startingDate,
     endingDate,
-    userAccountId
+    UserId
   }).then((data) => {
     console.log(data);
     res.json(data);
