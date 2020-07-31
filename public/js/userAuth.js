@@ -24,7 +24,7 @@ function checkState(){
     firebase.auth().signOut();
   }
 }
- // for signing into a new account
+ // for signing into a old account
 $("#sign-in-form").on("submit",function(event){
   checkState();
   // event.stopPropagation();
@@ -123,7 +123,7 @@ $("#sign-up-form").on("submit",function(event){
         console.log(currentUser);
         // Passing through the displayName userId and Email
         var passedUser = {
-          displayName: currentUser.displayName,
+          displayName: userName,
           email: currentUser.email,
           id:currentUser.uid
         }
@@ -132,7 +132,7 @@ $("#sign-up-form").on("submit",function(event){
           type: "POST",
           data: passedUser
         }).then(
-          function() {
+          function(user) {
             console.log("Successfully logged in.");
             location.replace("/user/home");
         });

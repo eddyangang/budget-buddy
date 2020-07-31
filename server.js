@@ -23,11 +23,6 @@ app.set("view engine", "handlebars");
 
 var routes = require("./routes/api-routes.js");
 
-<<<<<<< HEAD
-=======
-
-
->>>>>>> 2745d08e84617db53f37ee97da91d9d913b955a1
 app.use(routes);
 
 // Start our server so that it can begin listening to client requests.
