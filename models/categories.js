@@ -9,15 +9,8 @@ module.exports = function (sequelize, DataTypes) {
     });
 
     Categories.associate = function (models) {
-
-        Categories.belongsTo(models.Users, {
-            foreignKey: {
-                name: "userCategoryId", 
-                allowNull: false
-            }
-        }),
-
-        Categories.hasMany(models.orders)
+        Categories.belongsTo(models.Users)
+        Categories.hasMany(models.Orders)
     };
     return Categories;
 };
