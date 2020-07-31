@@ -55,9 +55,9 @@ const newOrder = {
     name: "Shampoo",
     price: 10,
     orderDate: new Date (2020, 07, 31),
-    userOrderId: 1,
-    categoryOrderId: 1,
-    accountOrderId: 1
+    // userOrderId: 1,
+    // categoryOrderId: 1,
+    // accountOrderId: 1
 }
 $.post("/api/orders/new", newOrder).then( data => {
     console.log("Order Added");

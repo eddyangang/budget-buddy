@@ -8,14 +8,12 @@ module.exports = function (sequelize, DataTypes) {
     Orders.associate = function (models) {
 
         Orders.belongsTo(models.Users, {
-            // as: "user",
+            as: "userId",
             foreignKey: {
                 name: "userOrderID",
                 allowNull: false
             }
-
         });
-
         Orders.belongsTo(models.Categories, {
             // as: "category",
             foreignKey: {
@@ -23,7 +21,6 @@ module.exports = function (sequelize, DataTypes) {
                 allowNull: false
             }
         });
-
         Orders.belongsTo(models.Account, {
             // as: "account",
             foreignKey: {
@@ -32,6 +29,5 @@ module.exports = function (sequelize, DataTypes) {
             }
         });
     };
-
     return Orders;
 };
