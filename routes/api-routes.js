@@ -96,14 +96,14 @@ router.post("/user", function (req, res) {
 
 router.post("/user/new", (req, res) => {
   var newUser = req.body;
-
+  console.log(newUser);
   db.Users.create({
     userID: newUser.id,
     email: newUser.email,
     name: newUser.displayName,
     username: newUser.displayName
   }).then(() => {
-    console.log("success")
+    console.log("success");
     userSignedIn = newUser;
     res.send(newUser)
   })
