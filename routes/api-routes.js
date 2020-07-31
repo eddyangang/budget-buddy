@@ -153,7 +153,7 @@ router.post("/api/account/new", (req, res) => {
 
 router.post("/user", function (req, res) {
   userSignedIn = req.body;
-  console.log(currentUser);
+  console.log(userSignedIn);
   res.send("/user/home");
 })
 
