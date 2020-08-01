@@ -1,5 +1,6 @@
 var express = require("express");
 var db = require("../models");
+const { reset } = require("nodemon");
 var router = express.Router();
 var userSignedIn;
 
@@ -139,6 +140,14 @@ router.get("/api/user/:id/account", (req, res) => {
   })
 })
 
+router.get("/api/user/:id/account/:accountId/orders", (req, res) => {
+  const id = req.params.id;
+  const accountId = req.params.accountId;
+  
+  db.Orders.findAll( { include: [ { AccountId: accountId, where: { UserId: id } } ] } ).then(data => {
+    reset.json(data)
+  })
+})
 
 // ~~~~~POST~~~~~~
 
