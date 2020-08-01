@@ -42,3 +42,12 @@
 #card-home {
     padding: 20px 20px;
 }
+
+#calendar {
+    margin-top: 4rem;
+}
+
+#card-cal {
+    margin: 30px 0px;
+    padding: 0px 30px 50px 30px;
+}
