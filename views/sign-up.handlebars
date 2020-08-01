@@ -1,4 +1,43 @@
-<form id ="sign-up-form">
+<nav>
+    <div class="nav-wrapper green">
+      <a href="#" class="brand-logo"><img src="../images/BB_logo_wht.png" id="nav-logo" alt="" width="300" height="auto"></a>
+      <ul id="nav-mobile" class="right hide-on-med-and-down">
+
+        {{!-- <li><a href="#">Account</a></li>
+        <li>|</li> --}}
+        <li><a href="#">About</a></li>
+        
+        {{!-- <li><a href="#">Settings</a></li> --}}
+
+      </ul>
+    </div>
+</nav>
+
+<main class="container">
+    <div class="row light-green lighten-4" id="card-signup">
+        <div class="col s12" id="">
+           <div class="card-panel green" id="sign-up-card">
+                <form id ="sign-up-form">
+                    <h3 class="light-green-text text-lighten-4">Sign Up</h3>
+                    <br>
+                    <h5 class="white-text">Full Name:</h5>
+                    <input type = "text" id ="userName" class = "form-text-field white">
+                    <br>
+                    <h5 class="white-text">Email:</h5>
+                    <input type = "text" id ="newUserEmail" class = "form-text-field white">
+                    <br>
+                    <h5 class="white-text">Password:</h5>
+                    <input type = "text" id ="newUserPassword" class = "form-text-field white">
+                    <br>
+                    <button type = "submit" id = "signUpSubmit">Sign Up</button>
+                </form>
+           </div>
+        </div>
+    </div>
+</main>
+
+
+{{!-- <form id ="sign-up-form">
 	<h2>Sign Up</h2>
     <br>
      <h3>Full Name</h3>
@@ -11,4 +50,4 @@
 	<input type = "text" id ="newUserPassword" class = "form-text-field">
     <br>
 	<button type = "submit" id = "signUpSubmit">Sign Up</button>
-</form>
+</form> --}}

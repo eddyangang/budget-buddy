@@ -20,3 +20,23 @@ body {
     margin-top: 3rem !important;
 
 }
+
+#sign-up-card{
+    max-width: 75%;
+    margin: 0 auto;
+    max-height: 75%;
+}
+
+#users-name {
+    margin: 0 auto;
+}
+
+#card-greet {
+    margin: 30px 0px;
+    padding: 0px 20px;
+}
+
+#card-signup {
+    margin: 30px 0px;
+    padding-bottom: 50px;
+}
