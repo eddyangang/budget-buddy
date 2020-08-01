@@ -12,9 +12,7 @@
       padding-left: 1rem;
 }
 
-/* body {
-      background-color: aliceblue;
-} */
+
 
 .card-panel {
     margin-top: 3rem !important;
@@ -42,6 +40,5 @@
 }
 
 #card-home {
-    /* margin: 30px 0px; */
     padding: 20px 20px;
 }
