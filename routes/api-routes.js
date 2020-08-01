@@ -13,27 +13,30 @@ router.get("/landing/sign-up", function (req, res) {
 })
 
 router.get("/user/home", function (req, res) {
-  console.log("this is the one!");
   db.Users.findOne({
     where: {
       userID: userSignedIn.id
-    } 
-  }).then(function(data){
+    }
+  }).then(function (data) {
     console.log(data);
     res.render("index", data);
   })
-  
 })
 
 router.get("/user/sign-out", function (req, res) {
   res.render("landing");
 
 })
-// get all information on  a user
+
+router.get("/calendar", function (req, res) {
+  res.render("calendar");
+})
+
+
+// get all information on a user
 router.get("/api/user/:id", (req, res) => {
   // get ID from request
   const id = req.params.id;
-
   // find user with ID
   db.Users.findOne({
       where: {
@@ -45,17 +48,10 @@ router.get("/api/user/:id", (req, res) => {
     })
 })
 
-
-router.get("/calendar", function (req, res) {
-  res.render("calendar");
-})
-
-
 // get all orders from a user. 
-router.get("/api/user/:id", (req, res) => {
+router.get("/api/user/:id/orders", (req, res) => {
   // get ID from request
   const id = req.params.id;
-
   // find user with ID
   db.Users.findOne({
       where: {
@@ -68,20 +64,70 @@ router.get("/api/user/:id", (req, res) => {
     })
 })
 
-// //  Get items based on category for a particular user
-// router.get("/api/user/:id", (req, res) => {
+// Get orders/items from a specific user for a specific category
+router.get("/api/user/:id/categories/:categoryID", (req, res) => {
+  // get ID from request
+  const id = req.params.id;
+  const categoryID = parseInt(req.params.categoryID);
+  // find user with ID
+  db.Categories.findAll({
+      where: {
+        UserId: id,
+        id: categoryID
+      },
+      include: [db.Orders]
+    })
+    .then((data) => {
+      res.json(data)
+    })
+})
 
+// get a specific catefory for a user category
+router.get("/api/user/:id/categories/:categoryID", (req, res) => {
+  // get ID from request
+  const id = req.params.id;
+  const categoryID = parseInt(req.params.categoryID);
+  // find user with ID
+  db.Categories.findAll({
+      where: {
+        UserId: id,
+        id: categoryID
+      }
+    })
+    .then((data) => {
+      res.json(data)
+    })
+})
 
-// })
+//  Get all categories for a particular user
+router.get("/api/user/:id/category", (req, res) => {
+  // get ID from request
+  const id = req.params.id;
+  db.Categories.findAll({
+      where: {
+        UserId: id
+      }
+    })
+    .then(data => {
+      res.json(data)
+    })
+})
+// get the most recent account for a user
+// can be used to get balance remainaing for the remainder of the week
+// get total allowance for a week
+router.get("/api/user/:id/account", (req, res) => {
+  const id = req.params.id;
+  db.Account.findAll({
+    limit: 1,
+    order: [["createdAt", "DESC"]],
+    where: {
+      UserId: id
+    }
+  }).then(data => {
+      res.json(data)
+    })
+})
 
-// // get balance remainaing for the remainder of the week
-// // get the total allowance used
-// router.get("/api/user/:id", (req, res) => {
-
-
-// })
-
-// // get total 
 
 // ~~~~~POST~~~~~~
 
@@ -107,7 +153,7 @@ router.post("/api/orders/new", (req, res) => {
 
   // get order details. INCLUDE USER ID.
   const order = req.body;
-
+  console.log(order);
   db.Orders.create({
       name: order.name,
       price: order.price,
@@ -176,7 +222,5 @@ router.post("/user", function (req, res) {
 // ~~~~~UPDATE~~~~~~
 
 // ~~~~~DELETE~~~~~~
-
-
 
 module.exports = router;
