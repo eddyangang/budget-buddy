@@ -54,8 +54,10 @@
 }
 
 #main-img {
-    padding: 50px 10px 0px 4px;
-   
+    padding: 50px 10px 0px 30px;
+    max-width: 90%;
+    max-height: auto;
+    margin: 0 auto;
 }
 
 #intro {
