@@ -12,9 +12,9 @@
       padding-left: 1rem;
 }
 
-body {
+/* body {
       background-color: aliceblue;
-}
+} */
 
 .card-panel {
     margin-top: 3rem !important;
@@ -39,4 +39,9 @@ body {
 #card-signup {
     margin: 30px 0px;
     padding-bottom: 50px;
+}
+
+#card-home {
+    /* margin: 30px 0px; */
+    padding: 20px 20px;
 }
