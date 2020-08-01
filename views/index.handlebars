@@ -10,9 +10,11 @@
         <li><a href="/user/sign-out">Log Out</a></li>
       </ul>
     </div>
-  </nav>
+</nav>
+
 
 <h3> Welcome back {{ this.dataValues.name}} </h3>
+
 
 <main class="container">
     <!-- Page Content goes here -->
@@ -46,35 +48,35 @@
 
 <!-- Items modal -->
 <div id="modal1" class="modal">
-<div class="modal-content">
-    <h4>Add an Item</h4>
+    <div class="modal-content">
+        <h4>Add an Item</h4>
 
-    <div class="row">
-    <form class="col s12">
-        <div class="row modal-form-row">
-            <div class="input-field col s12">
-                <input id="item-name" type="text" class="validate">
-                <label for="item-name">Item name:</label>
-            </div>
-        </div>
         <div class="row">
-            <div class="input-field col s12">
-                <input id="item-price" type="text" class="validate">
-                <label for="item-price">Price:</label>
+        <form class="col s12">
+            <div class="row modal-form-row">
+                <div class="input-field col s12">
+                    <input id="item-name" type="text" class="validate">
+                    <label for="item-name">Item name:</label>
+                </div>
             </div>
+            <div class="row">
+                <div class="input-field col s12">
+                    <input id="item-price" type="text" class="validate">
+                    <label for="item-price">Price:</label>
+                </div>
+            </div>
+            <div class="row">
+            <label>Category</label>
+                <select class="browser-default" id = "item-category">
+                    <option value="" disabled selected>Choose your category</option>
+                    <option value="1">Option 1</option>
+                    <option value="2">Option 2</option>
+                    <option value="3">Option 3</option>
+                </select>
+            </div>
+        </form>
         </div>
-        <div class="row">
-        <label>Category</label>
-            <select class="browser-default" id = "item-category">
-                <option value="" disabled selected>Choose your category</option>
-                <option value="1">Option 1</option>
-                <option value="2">Option 2</option>
-                <option value="3">Option 3</option>
-            </select>
-        </div>
-    </form>
     </div>
-</div>
 <div class="modal-footer">
     <a class=" modal-action modal-close waves-effect waves-green btn-flat">Submit</a>
 </div>
@@ -82,35 +84,35 @@
 
 <!-- Categories modal -->
 <div id="modal2" class="modal">
-<div class="modal-content">
-    <h4>Add an Item</h4>
+    <div class="modal-content">
+        <h4>Add an Item</h4>
 
-    <div class="row">
-    <form class="col s12">
-        <div class="row modal-form-row">
-        <div class="input-field col s12">
-            <input id="image_url" type="text" class="validate">
-            <label for="image_url">Image URL</label>
-        </div>
-        </div>
         <div class="row">
-        <div class="input-field col s12">
-            <input id="image_title" type="text" class="validate">
-            <label for="image_title">Title</label>
+            <form class="col s12">
+                <div class="row modal-form-row">
+                    <div class="input-field col s12">
+                        <input id="category_name" type="text" class="validate">
+                        <label for="category_name">Category Name</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="input-field col s12">
+                        <input id="category_goal" type="number" placeholder="100.00" step="0.01" min="0" max="100,000" class="validate">
+                        <label for="category_goal">Amount of money you are looking to spend on this category each week </label>
+                    </div>
+                </div>
+                {{!-- <div class="row">
+                <div class="input-field col s12">
+                    <textarea id="image_description" type="text" class="materialize-textarea validate"></textarea>
+                    <label for="image_description">Description</label>
+                </div>
+                </div> --}}
+            </form>
         </div>
-        </div>
-        <div class="row">
-        <div class="input-field col s12">
-            <textarea id="image_description" type="text" class="materialize-textarea validate"></textarea>
-            <label for="image_description">Description</label>
-        </div>
-        </div>
-    </form>
     </div>
-</div>
-<div class="modal-footer">
-    <a class=" modal-action modal-close waves-effect waves-green btn-flat">Submit</a>
-</div>
+    <div class="modal-footer">
+        <a class=" modal-action modal-close waves-effect waves-green btn-flat" data-value = "{{this.dataValues.id}}" id = "cat_submit">Submit</a>
+    </div>
 </div>
 
 
@@ -123,7 +125,6 @@
 
 <ul>
     <li>{{ user }}</li>
-
     <li>{{ this.firstName }}</li>
     <li> {{ this.lastName }}</li>
     <li> {{ this.username}} </li>

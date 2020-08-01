@@ -15,9 +15,15 @@ router.get("/landing/sign-up", function (req, res) {
 router.get("/user/home", function (req, res) {
   db.Users.findOne({
     where: {
+
+      id: userSignedIn.id
+    } 
+  }).then(function(data){
+
       userID: userSignedIn.id
     }
   }).then(function (data) {
+
     console.log(data);
     res.render("index", data);
   })
@@ -46,6 +52,12 @@ router.get("/api/user/:id", (req, res) => {
     .then((users) => {
       res.json(users)
     })
+})
+
+
+
+router.get("/calendar", function(req, res){
+  res.render("calendar");
 })
 
 // get all orders from a user. 
@@ -140,11 +152,13 @@ router.post("/user/new", (req, res) => {
     email: newUser.email,
     name: newUser.displayName,
     username: newUser.displayName
-  }).then(() => {
+  }).then((user) => {
     console.log("success");
-    userSignedIn = newUser;
-    res.send(newUser)
+    userSignedIn = user;
+    // res.send(newUser)
+    res.end();
   })
+
 })
 
 

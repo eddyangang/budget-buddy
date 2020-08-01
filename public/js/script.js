@@ -19,10 +19,10 @@ Some how all these routes only work on the landing page. Not sure why, but its p
 // })
 
 // Get a user by ID
-const id = "100"; // THIS is referring to auto_incremented ID, NOT userID. Can be quickly changed in api-routes later on. 
-$.get("/api/user/" + id, data => {
-    console.log(data);
-})
+// const id = "100"; // THIS is referring to auto_incremented ID, NOT userID. Can be quickly changed in api-routes later on. 
+// $.get("/api/user/" + id, data => {
+//     console.log(data);
+// })
 
 
 // Create a new category for a specific user
@@ -33,10 +33,10 @@ const newCategory = {
     UserId: "100" 
 }
 
-$.post("/api/category/new", newCategory).then((data) => {
-    console.log("Category entered");
-    console.log(data);
-})
+// $.post("/api/category/new", newCategory).then((data) => {
+//     console.log("Category entered");
+//     console.log(data);
+// })
 
 // create a new Account for the user
 const newAccount = {
@@ -44,20 +44,29 @@ const newAccount = {
     endingDate: new Date(2020, 8, 20), // month is 0 indexed so 08 -> 09
     UserId: "100"
 }
-$.post("/api/account/new", newAccount).then((data) => {
-    console.log("Account Added");
-    console.log(data);
-})
+
+// $.post("/api/account/new", newAccount).then((data) => {
+//     console.log("Account Added");
+
+//     console.log(data);
+// })
 
 // create a new order for a user 
 const newOrder = {
     name: "Shampoo",
     price: 10,
+
     orderDate: new Date(2020, 07, 31),
     UserId: "100",
     CategoriesId: 1,
     AccountId: 1
 }
+
+// $.post("/api/orders/new", newOrder).then(data => {
+//     console.log("Order Added");
+//     console.log(data);
+// })
+
 $.post("/api/orders/new", newOrder).then(data => {
     console.log("Order Added");
     console.log(data);
@@ -72,3 +81,4 @@ $.get("/api/user/100/categories/1").then( (data) => {
 $.get("/api/user/100/account").then( (data) => {
     console.log("ACCOUNT WEEKLY USED BUDGET: ", data);
 })
+

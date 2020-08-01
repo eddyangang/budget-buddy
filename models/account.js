@@ -14,6 +14,7 @@ module.exports = function (sequelize, DataTypes) {
 
     Account.associate = function (models) {
         Account.belongsTo(models.Users)
+            
     };
 
     return Account;

@@ -10,6 +10,7 @@ module.exports = function (sequelize, DataTypes) {
     });
 
     Users.associate = function (models) {
+        Users.hasMany(models.orders, {
         // add cascasemfor all relations
         Users.hasMany(models.Orders, {
             onDelete: "cascade"
