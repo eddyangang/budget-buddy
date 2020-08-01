@@ -1,14 +1,14 @@
 var express = require("express");
-var db = require("../models");
 var router = express.Router();
+var db = require("../models");
 var userSignedIn;
 
 // ~~~~~GET~~~~~~
-router.get("/landing", function (req, res) {
+router.get("/", function (req, res) {
   res.render("landing");
 })
 
-router.get("/landing/sign-up", function (req, res) {
+router.get("/sign-up", function (req, res) {
   res.render("sign-up");
 })
 
@@ -35,7 +35,6 @@ router.get("/user/sign-out", function (req, res) {
 router.get("/calendar", function (req, res) {
   res.render("calendar");
 })
-
 
 // get all information on a user
 router.get("/api/user/:id", (req, res) => {
@@ -141,7 +140,6 @@ router.get("/api/user/:id/account", (req, res) => {
 
 
 // ~~~~~POST~~~~~~
-
 // create a new user
 router.post("/user/new", (req, res) => {
   var newUser = req.body;
@@ -158,7 +156,6 @@ router.post("/user/new", (req, res) => {
     res.end();
   })
 })
-
 
 // add a order for a user // currently not working
 router.post("/api/orders/new", (req, res) => {

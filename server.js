@@ -21,10 +21,9 @@ app.set("view engine", "handlebars");
 
 // Import routes and give the server access to them.
 // Use api-routes.js
-var routes = require("./routes/api-routes.js");
-app.use(routes);
-// use html routes in different syntax
-// require("./routes/html-routes.js")(app);
+var apiroutes = require("./routes/api-routes.js");
+app.use(apiroutes);
+
 // Start our server so that it can begin listening to client requests.
 db.sequelize.sync({ force: false }).then(function() {
   app.listen(PORT, function() {
