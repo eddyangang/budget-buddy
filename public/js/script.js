@@ -30,7 +30,7 @@ const newCategory = {
     name: "Health",
     budget: 100.00,
     budgetUsed: 20.00,
-    UserId: "100" 
+    UserId: "100"
 }
 
 // $.post("/api/category/new", newCategory).then((data) => {
@@ -73,12 +73,19 @@ $.post("/api/orders/new", newOrder).then(data => {
 })
 
 // Get orders/ items from a specific user
-$.get("/api/user/100/categories/1").then( (data) => {
+$.get("/api/user/100/categories/1").then((data) => {
     console.log("ORDER DATA: ", data);
 })
 
 // get remaining balance from week
-$.get("/api/user/100/account").then( (data) => {
+$.get("/api/user/100/account").then((data) => {
     console.log("ACCOUNT WEEKLY USED BUDGET: ", data);
 })
 
+$.ajax({
+    method: "PUT",
+    url: "/api/user/100/categories/1",
+    data: {
+        budget: 10000.00
+    }
+}).then(data => console.log("UPDATED: ", data))
