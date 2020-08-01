@@ -7,11 +7,11 @@ Some how all these routes only work on the landing page. Not sure why, but its p
 */
 
 // Create a new user 
-const newUser = {
-    id: "100", // THIS is referring to userID, not the auto_incremented ID
-    email: "email",
-    displayName: "name1"
-}
+// const newUser = {
+//     id: "100", // THIS is referring to userID, not the auto_incremented ID
+//     email: "email",
+//     displayName: "name1"
+// }
 
 // $.post("/user/new", newUser).then((data) => {
 //     console.log("User entered");
@@ -62,8 +62,23 @@ const newOrder = {
     AccountId: 1
 }
 
-
 // $.post("/api/orders/new", newOrder).then(data => {
 //     console.log("Order Added");
 //     console.log(data);
 // })
+
+$.post("/api/orders/new", newOrder).then(data => {
+    console.log("Order Added");
+    console.log(data);
+})
+
+// Get orders/ items from a specific user
+$.get("/api/user/100/categories/1").then( (data) => {
+    console.log("ORDER DATA: ", data);
+})
+
+// get remaining balance from week
+$.get("/api/user/100/account").then( (data) => {
+    console.log("ACCOUNT WEEKLY USED BUDGET: ", data);
+})
+
