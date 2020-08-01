@@ -25,11 +25,11 @@ function checkState(){
   }
 }
 
-$.get("/user/sign-out",function(){
-  console.log("received");
-  firebase.auth().signOut();
-  checkState();
-})
+// $.get("/user/sign-out",function(){
+//   console.log("received");
+//   firebase.auth().signOut();
+//   checkState();
+// })
 
 
  // for signing into a old account

@@ -183,6 +183,7 @@ router.post("/api/orders/new", (req, res) => {
 // add a new category for a user 
 router.post("/api/category/new", (req, res) => {
   const category = req.body;
+  console.log(category);
   let {
     name,
     budget,
