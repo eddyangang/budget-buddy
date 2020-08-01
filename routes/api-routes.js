@@ -17,11 +17,9 @@ router.get("/user/home", function (req, res) {
     where: {
 
       id: userSignedIn.id
-    } 
-  }).then(function(data){
-
-      userID: userSignedIn.id
     }
+  }).then(function (data) {
+    userID: userSignedIn.id
   }).then(function (data) {
 
     console.log(data);
@@ -54,9 +52,7 @@ router.get("/api/user/:id", (req, res) => {
     })
 })
 
-
-
-router.get("/calendar", function(req, res){
+router.get("/calendar", function (req, res) {
   res.render("calendar");
 })
 
@@ -95,7 +91,7 @@ router.get("/api/user/:id/categories/:categoryID", (req, res) => {
 })
 
 // get a specific catefory for a user category
-router.get("/api/user/:id/categories/:categoryID", (req, res) => {
+router.get("/api/user/:id/category/:categoryID", (req, res) => {
   // get ID from request
   const id = req.params.id;
   const categoryID = parseInt(req.params.categoryID);
@@ -124,6 +120,7 @@ router.get("/api/user/:id/category", (req, res) => {
       res.json(data)
     })
 })
+
 // get the most recent account for a user
 // can be used to get balance remainaing for the remainder of the week
 // get total allowance for a week
@@ -131,13 +128,15 @@ router.get("/api/user/:id/account", (req, res) => {
   const id = req.params.id;
   db.Account.findAll({
     limit: 1,
-    order: [["createdAt", "DESC"]],
+    order: [
+      ["createdAt", "DESC"]
+    ],
     where: {
       UserId: id
     }
   }).then(data => {
-      res.json(data)
-    })
+    res.json(data)
+  })
 })
 
 
@@ -158,7 +157,6 @@ router.post("/user/new", (req, res) => {
     // res.send(newUser)
     res.end();
   })
-
 })
 
 
@@ -202,7 +200,6 @@ router.post("/api/category/new", (req, res) => {
     console.log(data);
     res.json(data);
   })
-
 })
 
 // Add a new account for a user 
@@ -234,6 +231,32 @@ router.post("/user", function (req, res) {
 })
 
 // ~~~~~UPDATE~~~~~~
+
+// update the budget for a category (budget total / budget Used)
+router.put("/api/user/:id/categories/:categoryID", (req, res) => {
+  const UserId = req.params.id;
+  const CategoryId = parseInt(req.params.categoryID);
+  let updatedCategory = req.body;
+
+  db.Categories.update( updatedCategory, { where: { UserId: UserId, id: CategoryId } }).then(data => res.send(data))
+})
+
+
+// Update Account information (weeklyBudgetUsed)
+router.put("/api/user/:id/account/:accoutId", (req, res) => {
+  const UserId = req.params.id;
+  const accountId = parseInt(req.params.accountId);
+  let updatedAccount = req.body;
+
+  db.Account.update( updatedAccount, { where: { UserId: UserId, id: accountId } }).then(data => res.send(data))
+})
+// Update Order Information
+router.put("/api/order/:orderId", (req, res) => {
+  const orderId = parseInt(req.params.accountId);
+  let updatedOrder = req.body;
+
+  db.Orders.update( updatedOrder, { where: { id: orderId } }).then(data => res.send(data))
+})
 
 // ~~~~~DELETE~~~~~~
 
