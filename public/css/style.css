@@ -9,14 +9,80 @@
 }
 
 #nav-logo {
-      padding-left: 1rem;
+    padding-left: 1rem;
+    padding-top: 10px;
 }
 
-body {
-      background-color: aliceblue;
-}
+
 
 .card-panel {
     margin-top: 3rem !important;
 
+}
+
+#sign-up-card{
+    max-width: 75%;
+    margin: 0 auto;
+    max-height: 75%;
+}
+
+#users-name {
+    margin: 0 auto;
+}
+
+#card-greet {
+    margin: 30px 0px;
+    padding: 0px 20px;
+}
+
+#card-signup {
+    margin: 30px 0px;
+    padding-bottom: 50px;
+}
+
+#card-home {
+    padding: 20px 20px;
+}
+
+#calendar {
+    margin-top: 4rem;
+}
+
+#card-cal {
+    margin: 30px 0px;
+    padding: 0px 30px 50px 30px;
+}
+
+#main-img {
+    padding: 50px 10px 0px 30px;
+    max-width: 90%;
+    max-height: auto;
+    margin: 0 auto;
+}
+
+#intro {
+    padding: 0px 10px;
+}
+
+#budget-look {
+    /* padding-top: 10px; */
+    margin: 0 auto !important;
+}
+
+#card-budget {
+    /* padding-top: 15px;
+    padding-bottom: 15px; */
+    padding: 15px 20px;
+}
+
+#total-budget-card {
+    padding-top: 10px;
+}
+
+#start-bud {
+    margin-bottom: 0px !important;
+}
+
+#spent-bud {
+    margin-top: 6px !important;
 }

@@ -1,32 +1,33 @@
 <nav>
     <div class="nav-wrapper green">
-      <a href="#" class="brand-logo"><img src="../images/BB_logo_wht.png" id="nav-logo" alt="" width="300" height="auto"></a>
+      <a href="/landing" class="brand-logo"><img src="../images/BB_logo_wht.png" id="nav-logo" alt="" width="200" height="auto"></a>
       <ul id="nav-mobile" class="right hide-on-med-and-down">
 
         {{!-- <li><a href="#">Account</a></li>
         <li>|</li> --}}
-        <li><a href="#">About</a></li>
-        <li>|</li>
+        <li><a href="/landing">About</a></li>
+        
         {{!-- <li><a href="#">Settings</a></li> --}}
 
       </ul>
     </div>
 </nav>
 
-<main class="container">
-	<div class="row">
+<main class="container main-content">
+	<div class="row light-green lighten-4" id="card-greet">
 
-      <div class="col s12 m5">
-        <h1 id = "header">Budget Buddy</h1>
+      <div class="col s12 m6">
+        {{!-- <h2 id = "header">Budget Buddy</h2> --}}
+		<img id="main-img" class="responsive-img" src="../images/BudgetBuddy_01.png" alt="" />
 
-		<p id = "intro">Welcome to Budget Buddy, the website the economic planner that
+		<p id = "intro">Welcome to Budget Buddy, the economic planner that
 			 helps you keep track of all your day to day purchases. To use the application 
-			 you simply just insert any upcoming purchases in the interface below and check 
+			 you simply insert any upcoming purchases into the interface and check 
 			 them off once you have completed them.
 		</p>
       </div>
 	  
-	  <div class="col s12 m1"></div>
+	  {{!-- <div class="col s12 m1"></div> --}}
 
       <div class="col s12 m6">
         <div id = "sign-in">
@@ -34,20 +35,21 @@
 				<div class="col s12 m12">
 					<div class="card-panel green" id="si-panel">
 						<form id ="sign-in-form">
-							<h2 class="white-text">Sign In</h2>
-							<h3 class="white-text">Email:</h3>
-							<input type = "text" id ="userEmail" placeholder="Email" class = "form-text-field">
+							<h3 class="light-green-text text-lighten-4">Sign In</h3>
+							<h5 class="white-text">Email:</h5>
+							<input type = "text" id ="userEmail" placeholder="Email" class = "form-text-field white">
 							<br>
-							<h3 class="white-text">Password:</h3>
-							<br>
-							<input type = "text" id ="userPassword" placeholder="Password" class = "form-text-field">
+							<h5 class="white-text">Password:</h5>
+							<input type = "text" id ="userPassword" placeholder="Password" class = "form-text-field white">
 							<button type = "submit" id = "signInSubmit">Enter</button>
 						</form>
 						
 					</div>
+					<p>Don't have an account? <a href ="/landing/sign-up" >Click Here</a></p>
 				</div>
   			</div>
-			
+            
+
             <p>Don't have an account? <a href ="/sign-up" >Click Here</a></p>
 		</div>
       </div>
@@ -55,3 +57,5 @@
     </div>
     
 </main>
+
+
