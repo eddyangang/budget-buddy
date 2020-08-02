@@ -47,10 +47,14 @@ router.get("/user/home", function (req, res) {
           where: {
             UserId: userSignedIn.id
           }
-        }).then(results => {
-          let accountData = checkAndCreateAccount(results);
-          data.accountId = accountData[0].dataValues.id;
-          data.weeklyBudget = accountData[0].dataValues.weeklyBudget;
+        }).then(async (results) => {
+          console.log(results);
+          let accountData = await checkAndCreateAccount(results);
+          console.log(accountData);
+          data.accountId = accountData[0].id;
+          data.weeklyBudget = accountData[0].weeklyBudget;
+          data.weeklyBudgetUsed = accountData[0].weeklyBudgetUsed;;
+          data.budgetRemaining = parseFloat(accountData[0].weeklyBudget) - parseFloat(accountData[0].weeklyBudgetUsed);
           res.render("index", data);
         })
       })
@@ -176,7 +180,8 @@ router.get("/api/user/:id/category", (req, res) => {
 
 
 function checkAndCreateAccount(oldAccount) {
-  if (oldAccount.length === 0) {
+
+  if (oldAccount.length === 0 || oldAccount === undefined) {
     const startingDate = new Date();
     const endingDate = new Date(startingDate.getTime())
     endingDate.setDate(endingDate.getDate() + 7)
@@ -187,7 +192,11 @@ function checkAndCreateAccount(oldAccount) {
       endingDate: endingDate,
       UserId: userSignedIn.id
     }).then((data) => {
-      return data;
+      console.log("DATA FROM checkandCreateAccount: ", data);
+      let result = []
+      result.push(data.dataValues)
+      console.log("RESULTS FROM checkandCreateAccount: ", result);
+      return result;
     })
   } else if (new Date(oldAccount.endingDate).getTime() < Date.now()) {
     let {
@@ -205,7 +214,9 @@ function checkAndCreateAccount(oldAccount) {
       endingDate,
       UserId
     }).then((data) => {
-      return data;
+      let result = []
+      result.push(data)
+      return result;
     })
   } else return oldAccount
 }
