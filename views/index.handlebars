@@ -1,7 +1,7 @@
 
 <nav>
     <div class="nav-wrapper green">
-      <a href="#" class="brand-logo"><img src="../images/BB_logo_wht.png" id="nav-logo" alt="" width="300" height="auto"></a>
+      <a href="#" class="brand-logo"><img src="../images/BB_logo_wht.png" id="nav-logo" alt="" width="200" height="auto"></a>
       <ul id="nav-mobile" class="right hide-on-med-and-down">
         <li><a href="/user/account">Account</a></li>
         <li>|</li>
@@ -13,30 +13,65 @@
 </nav>
 
 
-<h3> Welcome back {{ this.dataValues.name}} </h3>
+{{!-- <h3> Welcome back {{ this.dataValues.name }} </h3> --}}
+<div class="container" id="users-name">
+    <div class="row">
+        <div class="col s12">
+           <h3 class="center-align"> Welcome back {{ this.dataValues.name}} </h3>
+        </div>
+    </div>
+</div>
 
 
 <main class="container">
     <!-- Page Content goes here -->
-    <div class="row">
-        <div class="col s12 m6">
+
+    <div class="row light-green lighten-4" id="card-budget">
+        <div class="col m3"></div>
+        <div class="col s12 m6" id="budget-look">
             <div class="card green">
-                <div class="card-content white-text">
-                    <span class="card-title">Orders</span>
+                <div id="total-budget-card" class="white-text">
+                    {{!-- <span class="card-title">Orders</span> --}}
+                    <h4 id="remain-budget" class="center-align">Remaining Budget: $900</h4>
+                    <p id="start-bud" class="center-align">Starting budget: $1000</p>
+                    <p id="spent-bud" class="center-align">Amount spent: $100</p>
                     
                 </div>
                 <div class="card-action">
-                    <button class="waves-effect waves-light btn white modal-trigger blue-text text-darken-2" data-target="modal1">Add Order</button>
+                    <p class="center-align">
+                        <button id="up-budget-btn" class="btn waves-effect waves-light blue-text text-darken-2 white" type="submit" name="action">
+                        Update
+                        </button>
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="col m3"></div>
+    </div>
+
+    <div class="row light-green lighten-4" id="card-home">
+        <div class="col s12 m6">
+            <div class="card green">
+                <div class="card-content white-text">
+                    <h4 class="center-align">Orders</h4>
+                    
+                </div>
+                <div class="card-action">
+                    <p class="center-align">
+                        <button id="add-order-btn" class="waves-effect waves-light btn white modal-trigger blue-text text-darken-2" data-target="modal1">Add Order</button>
+                    </p>
                 </div>
             </div>
         </div>
         <div class="col s12 m6">
             <div class="card green">
                 <div class="card-content white-text">
-                    <span class="card-title">Categories</span>
+                    <h4 class="center-align">Categories</h4>
                 </div>   
                 <div class="card-action">
-                    <button class="waves-effect waves-light btn white modal-trigger blue-text text-darken-2" data-target="modal2">Add Category</button>
+                    <p class="center-align">
+                        <button id="add-cat-btn" class="waves-effect waves-light btn white modal-trigger blue-text text-darken-2" data-target="modal2">Add Category</button>
+                    </p>
                 </div>
             </div>
         </div>
