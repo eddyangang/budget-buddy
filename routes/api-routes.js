@@ -121,6 +121,32 @@ router.get("/api/categories/:categoryID", (req, res) => {
     })
 })
 
+
+router.get("/view/categories/:id",function(req,res){
+  var userId = req.params.id;
+  var data = {};
+  db.Categories.findAll({
+      where: {
+        UserId: userId,
+      }
+    })
+    .then((categories) => {
+      console.log(categories)
+      var cats = [];
+      for (var i = 0; i < categories.length; i++) {
+        var cat = {
+          name: categories[i].dataValues.name,
+          budget: categories[i].dataValues.budget,
+          budgetUsed: categories[i].dataValues.budgetUsed,
+          id: categories[i].dataValues.id
+        }
+        cats.push(cat);
+      }
+      data.categories = cats
+      console.log(data);
+      res.render("category",data);
+    })
+})
 // get a specific catefory for a user category
 router.get("/api/user/:id/category/:categoryID", (req, res) => {
   // get ID from request
