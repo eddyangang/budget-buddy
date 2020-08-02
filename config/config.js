@@ -1,4 +1,4 @@
-modeule.exports = {
+module.exports ={
   "development": {
     "username": "root",
     "password": null,
@@ -14,6 +14,10 @@ modeule.exports = {
     "dialect": "mysql"
   },
   "production": {
+    "username": "gkdqyptjm274vioy",
+    "password": "sab7em9t64w5c8c4",
+    "database": "fhqupdjqkcpwldd6",
+    "host": "gp96xszpzlqupw4k.cbetxkdyhwsb.us-east-1.rds.amazonaws.com",
     "use_env_variable": "JAWSDB_URL",
     "dialect": "mysql"
   }
