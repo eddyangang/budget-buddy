@@ -28,21 +28,30 @@ $(document).ready(function(){
       console.log(id);
       var date= $('.datepicker').val();
       console.log(date);
+      var year = parseInt(date.substr(0,4));
+      console.log(year);
+      var month = parseInt(date.substr(5,2))-1;
+      console.log(month);
+      var day = parseInt(date.substr(8,2));
+      console.log(day);
       var itemName = $("#item-name").val();
       console.log(itemName);
       var price = $("#item-price").val();
       console.log(parseFloat(price));
-      
+      var formatDate = new Date(year,month,day);
+      var CategoryId = $("#item-category").val();
+      console.log(formatDate);
       var newItem = {
-        name: name,
+        name: itemName,
         price:price,
-        CategoryId: 0,
+        CategoryId: CategoryId,
         AccountId: 1,
+        orderDate: formatDate,
         UserId:id
       }
-      // $.post("/api/orders/new",newItem).then(function(data){
-      //   console.log("order Submitted");
-      //   console.log(data);
-      // });
+      $.post("/api/orders/new",newItem).then(function(data){
+        console.log("order Submitted");
+        console.log(data);
+      });
     })
 });

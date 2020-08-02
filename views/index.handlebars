@@ -13,7 +13,7 @@
 </nav>
 
 
-<h3> Welcome back {{ this.dataValues.name}} </h3>
+<h3> Welcome back {{ this.username}} </h3>
 
 
 <main class="container">
@@ -69,9 +69,9 @@
                 <label>Category</label>
                 <select class="browser-default" id = "item-category">
                     <option value="" disabled selected>Choose your category</option>
-                    <option value="1">Option 1</option>
-                    <option value="2">Option 2</option>
-                    <option value="3">Option 3</option>
+                    {{#each this.categories}}
+                    <option value="{{this.id}}">{{this.name}}</option>
+                    {{/each}}
                 </select>
             </div>
             <div class="row">
@@ -82,7 +82,7 @@
         </div>
     </div>
 <div class="modal-footer">
-    <a class=" modal-action modal-close waves-effect waves-green btn-flat" data-value = "{{this.dataValues.id}}" id = "item_submit">Submit</a>
+    <a class=" modal-action modal-close waves-effect waves-green btn-flat" data-value = "{{this.userId}}" id = "item_submit">Submit</a>
 </div>
 </div>
 
@@ -115,7 +115,7 @@
         </div>
     </div>
     <div class="modal-footer">
-        <a class=" modal-action modal-close waves-effect waves-green btn-flat" data-value = "{{this.dataValues.id}}" id = "cat_submit">Submit</a>
+        <a class=" modal-action modal-close waves-effect waves-green btn-flat" data-value = "{{this.userId}}" id = "cat_submit">Submit</a>
     </div>
 </div>
 
@@ -126,11 +126,4 @@
 
 
 <script src="/js/modals.js"></script>
-
-<ul>
-    <li>{{ user }}</li>
-    <li>{{ this.firstName }}</li>
-    <li> {{ this.lastName }}</li>
-    <li> {{ this.username}} </li>
-</ul>
 
