@@ -5,7 +5,10 @@ module.exports = function (sequelize, DataTypes) {
 
         name: DataTypes.STRING,
         budget: DataTypes.DECIMAL(10, 2),
-        budgetUsed: DataTypes.DECIMAL(10, 2)
+        budgetUsed: {
+            type: DataTypes.DECIMAL(10, 2),
+            defaultValue: 0
+        }
     });
 
     Categories.associate = function (models) {

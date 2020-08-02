@@ -20,13 +20,18 @@ app.engine("handlebars", exphbs({ defaultLayout: "main" }));
 app.set("view engine", "handlebars");
 
 // Import routes and give the server access to them.
-
+// Use api-routes.js
 var routes = require("./routes/api-routes.js");
-
 app.use(routes);
-
+// use html routes in different syntax
+// require("./routes/html-routes.js")(app);
 // Start our server so that it can begin listening to client requests.
-db.sequelize.sync({ force: true }).then(function() {
+db.sequelize.sync({ force: false }).then(function() {
+//   db.Account.create( {
+//     weeklyBudget: 1000,
+//     endingDate: new Date(2020, 8, 20), // month is 0 indexed so 08 -> 09
+//     UserId: "100"
+// })
   app.listen(PORT, function() {
     console.log("App listening on PORT " + "http://localhost:" + PORT);
   });
