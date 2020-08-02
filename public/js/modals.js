@@ -41,14 +41,14 @@ $(document).ready(function () {
     const price = $("#item-price").val();
     console.log(parseFloat(price));
     const formatDate = new Date(year, month, day);
-    const CategoryId = $("#item-category").val();
-    console.log(typeof CategoryId);
+    const CategoryId = parseInt($("#item-category").val());
+    console.log(typeof CategoryId, CategoryId);
     console.log(formatDate);
     const newItem = {
       name: itemName,
       price: price,
-      CategoryId: parseInt(CategoryId),
-      AccountId: 1,
+      CategoriesId: CategoryId,
+      AccountId: 5,
       orderDate: formatDate,
       UserId: id
     }
@@ -57,4 +57,40 @@ $(document).ready(function () {
       console.log(data);
     });
   })
+
+
+  $("#search-item-category").on("change", () => {
+    $("#items-table").empty();
+    const categoryID = $("#search-item-category").val()
+    $.get(`/api/categories/${categoryID}`).then( (results) => {
+      const orders = results[0].Orders
+      console.log(typeof orders[0].price);
+      let table = `
+      <table> 
+        <thead>
+          <tr>
+            <th>Item Name</th>
+            <th>Order Date</th>
+            <th>Price</th>
+          </tr>
+        </thead>
+        <tbody>`;
+
+
+        orders.forEach(order => {
+          const row = `
+          <tr>
+            <td>${order.name}</td>
+            <td>${order.orderDate.slice(0,10)}</td>
+            <td>$${order.price}</td>
+          </tr>`
+          table += row
+        });
+        table += `</tbody></table>`
+      $("#items-table").append(table)
+    })
+  })
+
+
+
 });
