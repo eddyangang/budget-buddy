@@ -15,46 +15,46 @@ router.get("/sign-up", function (req, res) {
 router.get("/user/home", function (req, res) {
   var data = {};
   db.Categories.findAll({
-    where: {
-      UserId: userSignedIn.id,
-    }
-  })
-  .then((categories) => {
-    var cats = [];
-    for(var i = 0; i<categories.length; i++){
-      var cat = {
-        name: categories[i].dataValues.name,
-        id: categories[i].dataValues.id
-      }
-      cats.push(cat);
-    }
-
-    data.categories = cats;
-    db.Users.findOne({
       where: {
-        id: userSignedIn.id
+        UserId: userSignedIn.id,
       }
-    }).then(function (user) {
-      data.username = user.dataValues.username;
-      data.userId = user.dataValues.id;
-      console.log(data);
-      // res.render("index", data);
-      db.Account.findAll({
-        limit: 1,
-        order: [
-          ["createdAt", "DESC"]
-        ],
-        where: {
-          UserId: userSignedIn.id
+    })
+    .then((categories) => {
+      var cats = [];
+      for (var i = 0; i < categories.length; i++) {
+        var cat = {
+          name: categories[i].dataValues.name,
+          id: categories[i].dataValues.id
         }
-      }).then( results => {
-        let accountData = checkAndCreateAccount(results);
-        data.accountId = accountData[0].dataValues.id;
-        data.weeklyBudget = accountData[0].dataValues.weeklyBudget;
-        res.render("index", data);
+        cats.push(cat);
+      }
+
+      data.categories = cats;
+      db.Users.findOne({
+        where: {
+          id: userSignedIn.id
+        }
+      }).then(function (user) {
+        data.username = user.dataValues.username;
+        data.userId = user.dataValues.id;
+        console.log(data);
+        // res.render("index", data);
+        db.Account.findAll({
+          limit: 1,
+          order: [
+            ["createdAt", "DESC"]
+          ],
+          where: {
+            UserId: userSignedIn.id
+          }
+        }).then(results => {
+          let accountData = checkAndCreateAccount(results);
+          data.accountId = accountData[0].dataValues.id;
+          data.weeklyBudget = accountData[0].dataValues.weeklyBudget;
+          res.render("index", data);
+        })
       })
     })
-  })
 })
 
 router.get("/user/sign-out", function (req, res) {
@@ -102,14 +102,12 @@ router.get("/api/user/:id/orders", (req, res) => {
 })
 
 // Get orders/items from a specific user for a specific category
-router.get("/api/user/:id/categories/:categoryID", (req, res) => {
+router.get("/api/categories/:categoryID", (req, res) => {
   // get ID from request
-  const id = req.params.id;
   const categoryID = parseInt(req.params.categoryID);
   // find user with ID
   db.Categories.findAll({
       where: {
-        UserId: id,
         id: categoryID
       },
       include: [db.Orders]
@@ -152,7 +150,7 @@ router.get("/api/user/:id/category", (req, res) => {
 
 
 function checkAndCreateAccount(oldAccount) {
-  if (oldAccount.length === 0){
+  if (oldAccount.length === 0) {
     const startingDate = new Date();
     const endingDate = new Date(startingDate.getTime())
     endingDate.setDate(endingDate.getDate() + 7)
@@ -165,8 +163,7 @@ function checkAndCreateAccount(oldAccount) {
     }).then((data) => {
       return data;
     })
-  }
-  else if (new Date(oldAccount.endingDate).getTime() < Date.now()){
+  } else if (new Date(oldAccount.endingDate).getTime() < Date.now()) {
     let {
       weeklyBudget,
       UserId
@@ -175,7 +172,7 @@ function checkAndCreateAccount(oldAccount) {
     const startingDate = new Date();
     const endingDate = new Date(startingDate.getTime())
     endingDate.setDate(endingDate.getDate() + 7)
-  
+
     db.Account.create({
       weeklyBudget,
       startingDate,
@@ -210,8 +207,12 @@ router.get("/api/user/:id/account", (req, res) => {
 
 router.get("/api/account/:accountId/orders", (req, res) => {
   const accountId = req.params.accountId;
-  
-  db.Orders.findAll({where: {AccountId: accountId}}).then(data => {
+
+  db.Orders.findAll({
+    where: {
+      AccountId: accountId
+    }
+  }).then(data => {
     res.json(data)
   })
 })
@@ -234,26 +235,74 @@ router.post("/user/new", (req, res) => {
   })
 })
 
-// add a order for a user // currently not working
+// add a order for a user and updating the Account budget and category budget
 router.post("/api/orders/new", (req, res) => {
 
   // get order details. INCLUDE USER ID.
-  const order = req.body;
-  console.log(order);
+  let {
+    name,
+    price,
+    orderDate,
+    UserId,
+    CategoriesId,
+    AccountId
+  } = req.body
   db.Orders.create({
-      name: order.name,
-      price: order.price,
-      orderDate: order.orderDate,
-      UserId: order.UserId,
-      CategoryId: order.CategoriesId,
-      AccountId: order.AccountId
+      name,
+      price,
+      orderDate,
+      UserId,
+      CategoryId: CategoriesId,
+      AccountId
     })
     .then((data) => {
-      console.log(data);
+      addAmountToField("category", CategoriesId, price)
+      addAmountToField("account", AccountId, price)
       res.json(data);
-    })
+    });
 })
 
+function addAmountToField(field, id, amount) {
+  if (typeof amount != "number") amount = parseFloat(amount);
+  if (typeof id != "number") id = parseFloat(id);
+
+  console.log("amount: ", amount);
+  console.log(typeof amount);
+
+  switch (field) {
+    case "category":  
+      db.Categories.findOne({ where: {id: id}}).then( data => {
+        let { id, name, budget, budgetUsed } = data
+        budgetUsed = parseFloat(budgetUsed) + amount
+
+        let updatedCategory = {
+          name,
+          budget,
+          budgetUsed
+        }
+
+        db.Categories.update(updatedCategory, { where: {id: id}}).then( () => console.log("Category updated"))
+      })
+      break;
+    case "account":
+      db.Account.findOne({ where: {id: id}}).then( data => {
+        let { id, weeklyBudget, weeklyBudgetUsed } = data;
+        weeklyBudgetUsed = parseFloat(weeklyBudgetUsed) + amount;
+
+        let updatedAccount = {
+          weeklyBudget,
+          weeklyBudgetUsed
+        }
+
+        db.Account.update(updatedAccount, {where: {id: id}}).then( () => {
+          console.log("Account updated");
+        })
+      })
+      break;
+    default:
+      break;
+  }
+}
 // add a new category for a user 
 router.post("/api/category/new", (req, res) => {
   const category = req.body;
@@ -313,7 +362,12 @@ router.put("/api/user/:id/categories/:categoryID", (req, res) => {
   const CategoryId = parseInt(req.params.categoryID);
   let updatedCategory = req.body;
 
-  db.Categories.update( updatedCategory, { where: { UserId: UserId, id: CategoryId } }).then(data => res.send(data))
+  db.Categories.update(updatedCategory, {
+    where: {
+      UserId: UserId,
+      id: CategoryId
+    }
+  }).then(data => res.send(data))
 })
 
 
@@ -323,14 +377,23 @@ router.put("/api/user/:id/account/:accoutId", (req, res) => {
   const accountId = parseInt(req.params.accountId);
   let updatedAccount = req.body;
 
-  db.Account.update( updatedAccount, { where: { UserId: UserId, id: accountId } }).then(data => res.send(data))
+  db.Account.update(updatedAccount, {
+    where: {
+      UserId: UserId,
+      id: accountId
+    }
+  }).then(data => res.send(data))
 })
 // Update Order Information
 router.put("/api/order/:orderId", (req, res) => {
   const orderId = parseInt(req.params.accountId);
   let updatedOrder = req.body;
 
-  db.Orders.update( updatedOrder, { where: { id: orderId } }).then(data => res.send(data))
+  db.Orders.update(updatedOrder, {
+    where: {
+      id: orderId
+    }
+  }).then(data => res.send(data))
 })
 
 // ~~~~~DELETE~~~~~~
