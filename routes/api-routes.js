@@ -357,14 +357,12 @@ router.post("/user", function (req, res) {
 // ~~~~~UPDATE~~~~~~
 
 // update the budget for a category (budget total / budget Used)
-router.put("/api/user/:id/categories/:categoryID", (req, res) => {
-  const UserId = req.params.id;
+router.put("/api/categories/:categoryID", (req, res) => {
   const CategoryId = parseInt(req.params.categoryID);
   let updatedCategory = req.body;
 
   db.Categories.update(updatedCategory, {
     where: {
-      UserId: UserId,
       id: CategoryId
     }
   }).then(data => res.send(data))
