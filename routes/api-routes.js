@@ -136,16 +136,40 @@ router.get("/api/user/:id/account", (req, res) => {
       UserId: id
     }
   }).then(data => {
-    res.json(data)
+
+    // check if ending date is passed
+
+    if (!data.legnth) return
+
+    const oldAccount = data[0]
+    if (new Date(oldAccount.endingDate).getTime() < Date.now() ){
+      let {
+        weeklyBudget,
+        UserId
+      } = oldAccount;
+
+      const startingDate = new Date();
+      const endingDate = new Date(startingDate.getTime())
+      endingDate.setDate(endingDate.getDate() + 7)
+    
+      db.Account.create({
+        weeklyBudget,
+        startingDate,
+        endingDate,
+        UserId
+      }).then((data) => {
+        console.log(data);
+        res.json(data);
+      })
+    } else res.json(data)
   })
 })
 
-router.get("/api/user/:id/account/:accountId/orders", (req, res) => {
-  const id = req.params.id;
+router.get("/api/account/:accountId/orders", (req, res) => {
   const accountId = req.params.accountId;
   
-  db.Orders.findAll( { include: [ { AccountId: accountId, where: { UserId: id } } ] } ).then(data => {
-    reset.json(data)
+  db.Orders.findAll({where: {AccountId: accountId}}).then(data => {
+    res.json(data)
   })
 })
 
@@ -217,10 +241,11 @@ router.post("/api/account/new", (req, res) => {
   const newAccount = req.body;
   let {
     weeklyBudget,
-    startingDate,
-    endingDate,
     UserId
   } = newAccount;
+  const startingDate = new Date();
+  const endingDate = new Date(startingDate.getTime())
+  endingDate.setDate(endingDate.getDate() + 7)
 
   db.Account.create({
     weeklyBudget,
