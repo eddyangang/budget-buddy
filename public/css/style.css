@@ -75,6 +75,14 @@
     padding: 15px 20px;
 }
 
-#remain-budget {
+#total-budget-card {
     padding-top: 10px;
+}
+
+#start-bud {
+    margin-bottom: 0px !important;
+}
+
+#spent-bud {
+    margin-top: 6px !important;
 }
