@@ -51,7 +51,6 @@ router.get("/user/home", function (req, res) {
         let accountData = checkAndCreateAccount(results);
         data.accountId = accountData[0].dataValues.id;
         data.weeklyBudget = accountData[0].dataValues.weeklyBudget;
-        console.log(data);
         res.render("index", data);
       })
     })
