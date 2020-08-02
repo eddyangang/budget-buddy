@@ -10,7 +10,6 @@ module.exports = function (sequelize, DataTypes) {
     });
 
     Users.associate = function (models) {
-        // add cascasemfor all relations
         Users.hasMany(models.Orders, {
             onDelete: "cascade"
         });
@@ -25,7 +24,3 @@ module.exports = function (sequelize, DataTypes) {
     };
     return Users;
 };
-
-// hasMany will create a id on the target?
-
-// 
