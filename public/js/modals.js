@@ -42,13 +42,12 @@ $(document).ready(function () {
     console.log(parseFloat(price));
     const formatDate = new Date(year, month, day);
     const CategoryId = parseInt($("#item-category").val());
-    console.log(typeof CategoryId, CategoryId);
-    console.log(formatDate);
+    
     const newItem = {
       name: itemName,
       price: price,
       CategoriesId: CategoryId,
-      AccountId: 5,
+      AccountId: $("#remain-budget").data("id"),
       orderDate: formatDate,
       UserId: id
     }

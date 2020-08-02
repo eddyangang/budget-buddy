@@ -53,7 +53,8 @@ router.get("/user/home", function (req, res) {
           console.log(accountData);
           data.accountId = accountData[0].id;
           data.weeklyBudget = accountData[0].weeklyBudget;
-          data.weeklyBudgetUsed = accountData[0].weeklyBudgetUsed;
+          data.weeklyBudgetUsed = accountData[0].weeklyBudgetUsed;;
+          data.budgetRemaining = parseFloat(accountData[0].weeklyBudget) - parseFloat(accountData[0].weeklyBudgetUsed);
           res.render("index", data);
         })
       })
