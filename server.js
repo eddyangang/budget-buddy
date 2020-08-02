@@ -27,11 +27,11 @@ app.use(routes);
 // require("./routes/html-routes.js")(app);
 // Start our server so that it can begin listening to client requests.
 db.sequelize.sync({ force: false }).then(function() {
-  db.Account.create( {
-    weeklyBudget: 1000,
-    endingDate: new Date(2020, 8, 20), // month is 0 indexed so 08 -> 09
-    UserId: "100"
-})
+//   db.Account.create( {
+//     weeklyBudget: 1000,
+//     endingDate: new Date(2020, 8, 20), // month is 0 indexed so 08 -> 09
+//     UserId: "100"
+// })
   app.listen(PORT, function() {
     console.log("App listening on PORT " + "http://localhost:" + PORT);
   });

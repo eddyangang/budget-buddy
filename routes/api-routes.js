@@ -36,14 +36,25 @@ router.get("/user/home", function (req, res) {
       }
     }).then(function (user) {
       data.username = user.dataValues.username;
-      data.userId = user.dataValues.id
+      data.userId = user.dataValues.id;
       console.log(data);
-      res.render("index", data);
-  
+      // res.render("index", data);
+      db.Account.findAll({
+        limit: 1,
+        order: [
+          ["createdAt", "DESC"]
+        ],
+        where: {
+          UserId: userSignedIn.id
+        }
+      }).then( results => {
+        let accountData = checkAndCreateAccount(results);
+        data.accountId = accountData[0].dataValues.id;
+        data.weeklyBudget = accountData[0].dataValues.weeklyBudget;
+        res.render("index", data);
+      })
     })
-  
   })
-  
 })
 
 router.get("/user/sign-out", function (req, res) {
@@ -139,6 +150,42 @@ router.get("/api/user/:id/category", (req, res) => {
     })
 })
 
+
+function checkAndCreateAccount(oldAccount) {
+  if (oldAccount.length === 0){
+    const startingDate = new Date();
+    const endingDate = new Date(startingDate.getTime())
+    endingDate.setDate(endingDate.getDate() + 7)
+
+    db.Account.create({
+      weeklyBudget: 1000,
+      startingDate: startingDate,
+      endingDate: endingDate,
+      UserId: userSignedIn.id
+    }).then((data) => {
+      return data;
+    })
+  }
+  else if (new Date(oldAccount.endingDate).getTime() < Date.now()){
+    let {
+      weeklyBudget,
+      UserId
+    } = oldAccount;
+
+    const startingDate = new Date();
+    const endingDate = new Date(startingDate.getTime())
+    endingDate.setDate(endingDate.getDate() + 7)
+  
+    db.Account.create({
+      weeklyBudget,
+      startingDate,
+      endingDate,
+      UserId
+    }).then((data) => {
+      return data;
+    })
+  } else return oldAccount
+}
 // get the most recent account for a user
 // can be used to get balance remainaing for the remainder of the week
 // get total allowance for a week
@@ -153,10 +200,21 @@ router.get("/api/user/:id/account", (req, res) => {
       UserId: id
     }
   }).then(data => {
-    res.json(data)
+    // check if ending date is passed
+    console.log(data);
+    if (!data.length) return -1;
+    const oldAccount = data[0];
+    res.json(checkAndCreateAccount(oldAccount))
   })
 })
 
+router.get("/api/account/:accountId/orders", (req, res) => {
+  const accountId = req.params.accountId;
+  
+  db.Orders.findAll({where: {AccountId: accountId}}).then(data => {
+    res.json(data)
+  })
+})
 
 // ~~~~~POST~~~~~~
 // create a new user
@@ -224,10 +282,11 @@ router.post("/api/account/new", (req, res) => {
   const newAccount = req.body;
   let {
     weeklyBudget,
-    startingDate,
-    endingDate,
     UserId
   } = newAccount;
+  const startingDate = new Date();
+  const endingDate = new Date(startingDate.getTime())
+  endingDate.setDate(endingDate.getDate() + 7)
 
   db.Account.create({
     weeklyBudget,
@@ -243,8 +302,7 @@ router.post("/api/account/new", (req, res) => {
 
 router.post("/user", function (req, res) {
   userSignedIn = req.body;
-  console.log(userSignedIn);
-  res.send("/user/home");
+  res.redirect("/user/home");
 })
 
 // ~~~~~UPDATE~~~~~~
