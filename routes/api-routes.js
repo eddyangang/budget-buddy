@@ -161,7 +161,7 @@ function checkAndCreateAccount(oldAccount) {
       endingDate: endingDate,
       UserId: userSignedIn.id
     }).then((data) => {
-      return data;
+      return [data];
     })
   } else if (new Date(oldAccount.endingDate).getTime() < Date.now()) {
     let {
@@ -179,7 +179,7 @@ function checkAndCreateAccount(oldAccount) {
       endingDate,
       UserId
     }).then((data) => {
-      return data;
+      return [data];
     })
   } else return oldAccount
 }
