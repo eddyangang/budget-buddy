@@ -1,0 +1,88 @@
+
+<nav>
+    <div class="nav-wrapper green">
+      <a href="#" class="brand-logo"><img src="../../images/BB_logo_wht.png" id="nav-logo" alt="" width="200" height="auto"></a>
+      <ul id="nav-mobile" class="right hide-on-med-and-down">
+        <li><a href="/user/account">Account</a></li>
+        <li>|</li>
+        <li><a href="#">About</a></li>
+        <li>|</li>
+        <li><a href="/user/sign-out">Log Out</a></li>
+      </ul>
+    </div>
+</nav>
+
+
+
+
+<main class="container">
+    <!-- Page Content goes here -->
+
+    <div class="row light-green lighten-4" id="card-budget">
+        <div class="col m3"></div>
+        <div class="col s12 m6" id="category-look">
+            <div class="card green">
+                <div id="category-card" class="white-text">
+                    {{!-- <span class="card-title">Orders</span> --}}
+                    <h4 class="center-align">All Categories</h4>
+                    <table class = "responsive-table highlight">
+                        <thead>
+                        <tr>
+                            <th>Category</th>
+                            <th>Weekly budget</th>
+                            <th>Budget Used</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+          
+                        {{#each this.categories}}
+                            <tr>
+                                <td>{{this.name}}</td>
+                                <td>{{this.budget}}</td>
+                                <td>{{this.budgetUsed}}</td>
+                                <td><button id="{{this.id}}"class="waves-effect waves-light btn white modal-trigger blue-text text-darken-2 cat-modal-trig" data-value = "{{this.id}}" data-target="modal{{this.id}}">update category</button></td>
+                                <td><button id="delete{{this.id}}"class="waves-effect waves-light btn white modal-trigger blue-text text-darken-2 cat-modal-trig deleter" data-value = "{{this.id}}">delete category</button></td>
+                            </tr>
+                        {{/each}}
+                        </tbody>
+                    </table>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+</main>
+{{#each this.categories}}
+<div id="modal{{this.id}}" class="modal">
+    <div class="modal-content">
+        <h4>Update {{this.name}}</h4>
+
+        <div class="row">
+            <div class="row">
+            
+            <p>Current budget: {{this.budget}}</p>
+            
+            </div>
+            <div class="row">
+            
+            <p>Current Budget Used: {{this.budgetUsed}}</p>
+            
+            </div>
+            <form class="col s12">
+                <div class="row">
+                    <div class="input-field col s12">
+                        <input id="update-category-budget{{this.id}}" type="number" placeholder="100.00" step="0.01" min="0" max="100,000" class="validate">
+                        <label for="update-category-budget{{this.id}}">Update weekly amount for this Category</label>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <a class=" modal-action modal-close waves-effect waves-green btn-flat update-cat-submit" data-value = "{{this.id}}" id = "update-cat-submit{{this.id}}">Submit</a>
+    </div>
+</div>
+{{/each}}
+
+<script src="/js/category.js"></script>
