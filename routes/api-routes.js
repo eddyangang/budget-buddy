@@ -47,10 +47,14 @@ router.get("/user/home", function (req, res) {
           where: {
             UserId: userSignedIn.id
           }
-        }).then(results => {
-          let accountData = checkAndCreateAccount(results);
-          data.accountId = accountData[0].dataValues.id;
-          data.weeklyBudget = accountData[0].dataValues.weeklyBudget;
+        }).then(async (results) => {
+          console.log(results);
+          let accountData = await checkAndCreateAccount(results);
+          console.log(accountData);
+          data.accountId = accountData[0].id;
+          data.weeklyBudget = accountData[0].weeklyBudget;
+          data.weeklyBudgetUsed = accountData[0].weeklyBudgetUsed;;
+          data.budgetRemaining = parseFloat(accountData[0].weeklyBudget) - parseFloat(accountData[0].weeklyBudgetUsed);
           res.render("index", data);
         })
       })
@@ -117,6 +121,32 @@ router.get("/api/categories/:categoryID", (req, res) => {
     })
 })
 
+
+router.get("/view/categories/:id",function(req,res){
+  var userId = req.params.id;
+  var data = {};
+  db.Categories.findAll({
+      where: {
+        UserId: userId,
+      }
+    })
+    .then((categories) => {
+      console.log(categories)
+      var cats = [];
+      for (var i = 0; i < categories.length; i++) {
+        var cat = {
+          name: categories[i].dataValues.name,
+          budget: categories[i].dataValues.budget,
+          budgetUsed: categories[i].dataValues.budgetUsed,
+          id: categories[i].dataValues.id
+        }
+        cats.push(cat);
+      }
+      data.categories = cats
+      console.log(data);
+      res.render("category",data);
+    })
+})
 // get a specific catefory for a user category
 router.get("/api/user/:id/category/:categoryID", (req, res) => {
   // get ID from request
@@ -150,7 +180,8 @@ router.get("/api/user/:id/category", (req, res) => {
 
 
 function checkAndCreateAccount(oldAccount) {
-  if (oldAccount.length === 0) {
+
+  if (oldAccount.length === 0 || oldAccount === undefined) {
     const startingDate = new Date();
     const endingDate = new Date(startingDate.getTime())
     endingDate.setDate(endingDate.getDate() + 7)
@@ -161,7 +192,11 @@ function checkAndCreateAccount(oldAccount) {
       endingDate: endingDate,
       UserId: userSignedIn.id
     }).then((data) => {
-      return data;
+      console.log("DATA FROM checkandCreateAccount: ", data);
+      let result = []
+      result.push(data.dataValues)
+      console.log("RESULTS FROM checkandCreateAccount: ", result);
+      return result;
     })
   } else if (new Date(oldAccount.endingDate).getTime() < Date.now()) {
     let {
@@ -179,7 +214,9 @@ function checkAndCreateAccount(oldAccount) {
       endingDate,
       UserId
     }).then((data) => {
-      return data;
+      let result = []
+      result.push(data)
+      return result;
     })
   } else return oldAccount
 }

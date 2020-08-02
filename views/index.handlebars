@@ -14,18 +14,13 @@
 
 
 
-{{!-- <h3> Welcome back {{ this.dataValues.name }} </h3> --}}
 <div class="container" id="users-name">
     <div class="row">
         <div class="col s12">
-           <h3 class="center-align"> Welcome back {{ this.dataValues.name}} </h3>
+           <h3 class="center-align"> Welcome back {{ this.username}} </h3>
         </div>
     </div>
 </div>
-
-{{!-- <h3> Welcome back {{ this.username}} </h3> --}}
-
-
 
 <main class="container">
     <!-- Page Content goes here -->
@@ -36,9 +31,9 @@
             <div class="card green">
                 <div id="total-budget-card" class="white-text">
                     {{!-- <span class="card-title">Orders</span> --}}
-                    <h4 id="remain-budget" class="center-align">Remaining Budget: $900</h4>
-                    <p id="start-bud" class="center-align">Starting budget: $1000</p>
-                    <p id="spent-bud" class="center-align">Amount spent: $100</p>
+                    <h4 id="remain-budget" class="center-align" data-id="{{this.accountId}}">Remaining Budget: ${{ this.budgetRemaining }}</h4>
+                    <p id="start-bud" class="center-align">Starting budget: ${{ this.weeklyBudget }}</p>
+                    <p id="spent-bud" class="center-align">Amount spent: ${{ this.weeklyBudgetUsed }}</p>
                     
                 </div>
                 <div class="card-action">
@@ -65,9 +60,7 @@
                     <p class="center-align">
                         <button id="add-order-btn" class="waves-effect waves-light btn white modal-trigger blue-text text-darken-2" data-target="modal1">Add Order</button>
                     </p>
-
-                    <button class="waves-effect waves-light btn white modal-trigger blue-text text-darken-2" data-target="modal1">Add An Order</button>
-
+                    
                 </div>
             </div>
         </div>
@@ -81,11 +74,9 @@
                     <p class="center-align">
                         <button id="add-cat-btn" class="waves-effect waves-light btn white modal-trigger blue-text text-darken-2" data-target="modal2">Add Category</button>
                     </p>
-
-                    <button class="waves-effect waves-light btn white modal-trigger blue-text text-darken-2" data-target="modal2">Add a Category</button>
-
-                    <button class="waves-effect waves-light btn white modal-trigger blue-text text-darken-2" data-target="modal3">Update a Category</button>
-
+                    <p class="center-align">
+                    <a class="waves-effect waves-light btn white modal-trigger blue-text text-darken-2" id  = "view-cats" data-value = "{{this.userId}}" href = "/view/categories/{{this.userId}}">View Categories</a>
+                    </p>
                 </div>
             </div>
         </div>
@@ -169,12 +160,6 @@
                         <label for="category_goal">Amount of money you are looking to spend on this category each week </label>
                     </div>
                 </div>
-                {{!-- <div class="row">
-                <div class="input-field col s12">
-                    <textarea id="image_description" type="text" class="materialize-textarea validate"></textarea>
-                    <label for="image_description">Description</label>
-                </div>
-                </div> --}}
             </form>
         </div>
     </div>
@@ -183,43 +168,6 @@
     </div>
 </div>
 
-
-<div id="modal3" class="modal">
-    <div class="modal-content">
-        <h4>Update a Category</h4>
-
-        <div class="row">
-            <form class="col s12">
-                <div class="row modal-form-row">
-                    <label>Category</label>
-                <select class="browser-default" id = "update-category">
-                    <option value="" disabled selected>Choose your category</option>
-                    {{#each this.categories}}
-                    <option value="{{this.id}}">{{this.name}}</option>
-                    {{/each}}
-                </select>
-                </div>
-                <div class="row">
-                    <div class="input-field col s12">
-                        <input id="update-category-budget" type="number" placeholder="100.00" step="0.01" min="0" max="100,000" class="validate">
-                        <label for="update-category-budget">Update weekly amount for this Category</label>
-
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="input-field col s12">
-                        <input id="update-category-budgetUsed" type="number" placeholder="50.00" step="0.01" min="0" max="100,000" class="validate">
-                        <label for="update-category-budgetUsed">Update weekly amount for this Category already used</label>
-                    </div>
-                </div>
-            </form>
-        </div>
-    </div>
-    <div class="modal-footer">
-        <a class=" modal-action modal-close waves-effect waves-green btn-flat" data-value = "{{this.userId}}" id = "update-cat-submit">Submit</a>
-    </div>
-</div>
 
 
 
