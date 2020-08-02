@@ -1,30 +1,60 @@
 var express = require("express");
-var db = require("../models");
-const { reset } = require("nodemon");
 var router = express.Router();
+var db = require("../models");
 var userSignedIn;
 
 // ~~~~~GET~~~~~~
-router.get("/landing", function (req, res) {
+router.get("/", function (req, res) {
   res.render("landing");
 })
 
-router.get("/landing/sign-up", function (req, res) {
+router.get("/sign-up", function (req, res) {
   res.render("sign-up");
 })
 
 router.get("/user/home", function (req, res) {
-  db.Users.findOne({
+  var data = {};
+  db.Categories.findAll({
     where: {
-
-      id: userSignedIn.id
+      UserId: userSignedIn.id,
     }
-  }).then(function (data) {
-    userID: userSignedIn.id
-  }).then(function (data) {
+  })
+  .then((categories) => {
+    var cats = [];
+    for(var i = 0; i<categories.length; i++){
+      var cat = {
+        name: categories[i].dataValues.name,
+        id: categories[i].dataValues.id
+      }
+      cats.push(cat);
+    }
 
-    console.log(data);
-    res.render("index", data);
+    data.categories = cats;
+    db.Users.findOne({
+      where: {
+        id: userSignedIn.id
+      }
+    }).then(function (user) {
+      data.username = user.dataValues.username;
+      data.userId = user.dataValues.id;
+      console.log(data);
+      // res.render("index", data);
+      db.Account.findAll({
+        limit: 1,
+        order: [
+          ["createdAt", "DESC"]
+        ],
+        where: {
+          UserId: userSignedIn.id
+        }
+      }).then( results => {
+        let accountData = checkAndCreateAccount(results);
+        data.accountId = accountData[0].dataValues.id;
+        data.weeklyBudget = accountData[0].dataValues.weeklyBudget;
+        console.log(data);
+        res.render("index", data);
+      })
+    })
   })
 })
 
@@ -36,7 +66,6 @@ router.get("/user/sign-out", function (req, res) {
 router.get("/calendar", function (req, res) {
   res.render("calendar");
 })
-
 
 // get all information on a user
 router.get("/api/user/:id", (req, res) => {
@@ -122,6 +151,42 @@ router.get("/api/user/:id/category", (req, res) => {
     })
 })
 
+
+function checkAndCreateAccount(oldAccount) {
+  if (oldAccount.length === 0){
+    const startingDate = new Date();
+    const endingDate = new Date(startingDate.getTime())
+    endingDate.setDate(endingDate.getDate() + 7)
+
+    db.Account.create({
+      weeklyBudget: 1000,
+      startingDate: startingDate,
+      endingDate: endingDate,
+      UserId: userSignedIn.id
+    }).then((data) => {
+      return data;
+    })
+  }
+  else if (new Date(oldAccount.endingDate).getTime() < Date.now()){
+    let {
+      weeklyBudget,
+      UserId
+    } = oldAccount;
+
+    const startingDate = new Date();
+    const endingDate = new Date(startingDate.getTime())
+    endingDate.setDate(endingDate.getDate() + 7)
+  
+    db.Account.create({
+      weeklyBudget,
+      startingDate,
+      endingDate,
+      UserId
+    }).then((data) => {
+      return data;
+    })
+  } else return oldAccount
+}
 // get the most recent account for a user
 // can be used to get balance remainaing for the remainder of the week
 // get total allowance for a week
@@ -136,32 +201,11 @@ router.get("/api/user/:id/account", (req, res) => {
       UserId: id
     }
   }).then(data => {
-
     // check if ending date is passed
-
-    if (!data.legnth) return
-
-    const oldAccount = data[0]
-    if (new Date(oldAccount.endingDate).getTime() < Date.now() ){
-      let {
-        weeklyBudget,
-        UserId
-      } = oldAccount;
-
-      const startingDate = new Date();
-      const endingDate = new Date(startingDate.getTime())
-      endingDate.setDate(endingDate.getDate() + 7)
-    
-      db.Account.create({
-        weeklyBudget,
-        startingDate,
-        endingDate,
-        UserId
-      }).then((data) => {
-        console.log(data);
-        res.json(data);
-      })
-    } else res.json(data)
+    console.log(data);
+    if (!data.length) return -1;
+    const oldAccount = data[0];
+    res.json(checkAndCreateAccount(oldAccount))
   })
 })
 
@@ -174,7 +218,6 @@ router.get("/api/account/:accountId/orders", (req, res) => {
 })
 
 // ~~~~~POST~~~~~~
-
 // create a new user
 router.post("/user/new", (req, res) => {
   var newUser = req.body;
@@ -191,7 +234,6 @@ router.post("/user/new", (req, res) => {
     res.end();
   })
 })
-
 
 // add a order for a user // currently not working
 router.post("/api/orders/new", (req, res) => {
@@ -261,8 +303,7 @@ router.post("/api/account/new", (req, res) => {
 
 router.post("/user", function (req, res) {
   userSignedIn = req.body;
-  console.log(userSignedIn);
-  res.send("/user/home");
+  res.redirect("/user/home");
 })
 
 // ~~~~~UPDATE~~~~~~
