@@ -92,5 +92,20 @@ $(document).ready(function () {
   })
 
 
+  $("#update-cat-submit").on("click", function() {
+    const newBudget = $("#update-category-budget").val()
+    const newBudgetUsed = $("#update-category-budgetUsed").val()
+    const categoryId = $("#update-category").val()
+    console.log(categoryId);
+
+    $.ajax({
+      method: "PUT",
+      url: "/api/categories/" + categoryId,
+      data: {
+          budget: newBudget,
+          budgetUsed: newBudgetUsed
+      }
+  }).then(data => console.log("UPDATED: ", data))
+  })
 
 });
