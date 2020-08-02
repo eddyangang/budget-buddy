@@ -13,18 +13,37 @@ router.get("/sign-up", function (req, res) {
 })
 
 router.get("/user/home", function (req, res) {
-  db.Users.findOne({
+  var data = {};
+  db.Categories.findAll({
     where: {
-
-      id: userSignedIn.id
+      UserId: userSignedIn.id,
     }
-  }).then(function (data) {
-    userID: userSignedIn.id
-  }).then(function (data) {
-
-    console.log(data);
-    res.render("index", data);
   })
+  .then((categories) => {
+    var cats = [];
+    for(var i = 0; i<categories.length; i++){
+      var cat = {
+        name: categories[i].dataValues.name,
+        id: categories[i].dataValues.id
+      }
+      cats.push(cat);
+    }
+
+    data.categories = cats;
+    db.Users.findOne({
+      where: {
+        id: userSignedIn.id
+      }
+    }).then(function (user) {
+      data.username = user.dataValues.username;
+      data.userId = user.dataValues.id
+      console.log(data);
+      res.render("index", data);
+  
+    })
+  
+  })
+  
 })
 
 router.get("/user/sign-out", function (req, res) {

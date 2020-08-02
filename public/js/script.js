@@ -67,25 +67,25 @@ const newOrder = {
 //     console.log(data);
 // })
 
-$.post("/api/orders/new", newOrder).then(data => {
-    console.log("Order Added");
-    console.log(data);
-})
+// $.post("/api/orders/new", newOrder).then(data => {
+//     console.log("Order Added");
+//     console.log(data);
+// })
 
-// Get orders/ items from a specific user
-$.get("/api/user/100/categories/1").then((data) => {
-    console.log("ORDER DATA: ", data);
-})
+// // Get orders/ items from a specific user
+// $.get("/api/user/100/categories/1").then((data) => {
+//     console.log("ORDER DATA: ", data);
+// })
 
 // get remaining balance from week
-$.get("/api/user/100/account").then((data) => {
-    console.log("ACCOUNT WEEKLY USED BUDGET: ", data);
-})
+// $.get("/api/user/100/account").then((data) => {
+//     console.log("ACCOUNT WEEKLY USED BUDGET: ", data);
+// })
 
-$.ajax({
-    method: "PUT",
-    url: "/api/user/100/categories/1",
-    data: {
-        budget: 10000.00
-    }
-}).then(data => console.log("UPDATED: ", data))
+// $.ajax({
+//     method: "PUT",
+//     url: "/api/user/100/categories/1",
+//     data: {
+//         budget: 10000.00
+//     }
+// }).then(data => console.log("UPDATED: ", data))
