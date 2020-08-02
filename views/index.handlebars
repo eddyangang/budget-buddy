@@ -41,6 +41,21 @@
             </div>
         </div>
     </div>
+
+
+    <div class="row container">
+        <div>
+            <select class="browser-default col s12 m6 l4" id = "search-item-category">
+                <option value="" disabled selected>Search by your category</option>
+                {{#each this.categories}}
+                    <option value="{{this.id}}">{{this.name}}</option>
+                {{/each}}
+            </select>
+            <div id="items-table"></div>
+        </div>
+    </div>
+
+
 </main>
 
 {{!-- <!-- Modal Trigger -->
