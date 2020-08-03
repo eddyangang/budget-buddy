@@ -20,7 +20,6 @@ $(document).ready(function () {
             prevArrow: '<i class="material-icons">keyboard_arrow_left</i>',
             nextArrow: '<i class="material-icons">keyboard_arrow_right</i>',
             onBuild: function() {
-                console.log('onBuild event')
             }
         });
 
