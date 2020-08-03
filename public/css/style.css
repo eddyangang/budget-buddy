@@ -77,6 +77,7 @@
 
 #total-budget-card {
     padding-top: 10px;
+    margin-top: 30px;
 }
 
 #start-bud {
@@ -85,4 +86,18 @@
 
 #spent-bud {
     margin-top: 6px !important;
+}
+
+#search-item-category {
+    margin: 0 auto !important;
+}
+
+#card-by-cat {
+    margin-top: 40px;
+    padding-top: 3%;
+    padding-bottom: 2%;
+}
+
+#category-card {
+    padding-top: 3%;
 }

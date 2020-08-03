@@ -472,8 +472,16 @@ router.delete("/api/category/:categoryid/delete", (req, res) => {
 //delete a order
 router.delete("/api/order/:orderid/delete", (req, res) => {
   const orderId = parseInt(req.params.orderid);
-
-  db.Orders.destroy( { where: {id: orderId}}).then(() => res.send(200))
+  db.Orders.findOne({ where: {
+    id: orderId 
+  }}).then(function(data){
+    var accountId = data.AccountId;
+    var categoryId = data.CategoryId;
+    var price = data.price*-1;
+    addAmountToField("account", accountId, price);
+    addAmountToField("category", categoryId, price);
+    db.Orders.destroy( { where: {id: orderId}}).then(() => res.send(200))
+  })
 })
 
 // delete a account
