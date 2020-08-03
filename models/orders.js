@@ -7,13 +7,11 @@ module.exports = function (sequelize, DataTypes) {
 
     Orders.associate = function (models) {
 
-
         Orders.belongsTo(models.Users)
 
         Orders.belongsTo(models.Categories)
 
         Orders.belongsTo(models.Account)
-
     };
     return Orders;
 };

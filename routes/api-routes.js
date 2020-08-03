@@ -48,15 +48,54 @@ router.get("/user/home", function (req, res) {
           where: {
             UserId: userSignedIn.id
           }
-        }).then(async (results) => {
-          console.log(results);
-          let accountData = await checkAndCreateAccount(results);
-          console.log(accountData);
-          data.accountId = accountData[0].id;
-          data.weeklyBudget = accountData[0].weeklyBudget;
-          data.weeklyBudgetUsed = accountData[0].weeklyBudgetUsed;
-          data.budgetRemaining = parseFloat(accountData[0].weeklyBudget) - parseFloat(accountData[0].weeklyBudgetUsed);
-          res.render("index", data)
+        }).then(async (oldAccount) => {
+          try {
+            // if new user and does have accout, automatically generate an account for them w/ default values
+            if (oldAccount.length === 0 || oldAccount === undefined) {
+              const startingDate = new Date();
+              const endingDate = new Date(startingDate.getTime())
+              endingDate.setDate(endingDate.getDate() + 7)
+
+              await db.Account.create({
+                weeklyBudget: 1000,
+                startingDate: startingDate,
+                endingDate: endingDate,
+                UserId: userSignedIn.id
+              }).then((data) => {
+                oldAccount = [data];
+              })
+
+            }
+            // if oldAccount has expired
+            if (new Date(oldAccount.endingDate).getTime() < Date.now()) {
+              let {
+                weeklyBudget,
+                UserId
+              } = oldAccount;
+
+              const startingDate = new Date();
+              const endingDate = new Date(startingDate.getTime())
+              endingDate.setDate(endingDate.getDate() + 7)
+
+              await db.Account.create({
+                weeklyBudget,
+                startingDate,
+                endingDate,
+                UserId
+              }).then((data) => {
+                oldAccount = [data];
+              })
+            }
+            let accountData = oldAccount[0].dataValues
+            data.accountId = accountData.id;
+            data.weeklyBudget = accountData.weeklyBudget;
+            data.weeklyBudgetUsed = accountData.weeklyBudgetUsed;
+            data.budgetRemaining = parseFloat(accountData.weeklyBudget) - parseFloat(accountData.weeklyBudgetUsed);
+            res.render("index", data)
+          } catch (err) {
+            if (err) throw err;
+            res.render("index", data)
+          }
         })
       })
     })
@@ -228,48 +267,6 @@ router.get("/api/user/:id/category", (req, res) => {
     })
 })
 
-
-function checkAndCreateAccount(oldAccount) {
-
-  if (oldAccount.length === 0 || oldAccount === undefined) {
-    const startingDate = new Date();
-    const endingDate = new Date(startingDate.getTime())
-    endingDate.setDate(endingDate.getDate() + 7)
-
-    db.Account.create({
-      weeklyBudget: 1000,
-      startingDate: startingDate,
-      endingDate: endingDate,
-      UserId: userSignedIn.id
-    }).then((data) => {
-      console.log("DATA FROM checkandCreateAccount: ", data);
-      let result = []
-      result.push(data.dataValues)
-      console.log("RESULTS FROM checkandCreateAccount: ", result);
-      return result;
-    })
-  } else if (new Date(oldAccount.endingDate).getTime() < Date.now()) {
-    let {
-      weeklyBudget,
-      UserId
-    } = oldAccount;
-
-    const startingDate = new Date();
-    const endingDate = new Date(startingDate.getTime())
-    endingDate.setDate(endingDate.getDate() + 7)
-
-    db.Account.create({
-      weeklyBudget,
-      startingDate,
-      endingDate,
-      UserId
-    }).then((data) => {
-      let result = []
-      result.push(data)
-      return result;
-    })
-  } else return oldAccount
-}
 // get the most recent account for a user
 // can be used to get balance remainaing for the remainder of the week
 // get total allowance for a week
@@ -285,6 +282,7 @@ router.get("/api/user/:id/account", (req, res) => {
     }
   }).then(data => {
     // check if ending date is passed
+    console.log("DATA FOR NO ACCOUNT: ");
     console.log(data);
     if (!data.length) return -1;
     const oldAccount = data[0];
