@@ -436,11 +436,11 @@ router.put("/api/categories/:categoryID", (req, res) => {
 
 
 // Update Account information (weeklyBudgetUsed)
-router.put("/api/user/:id/account/:accoutId", (req, res) => {
+router.put("/api/user/:id/account/:accountId", (req, res) => {
   const UserId = req.params.id;
   const accountId = parseInt(req.params.accountId);
   let updatedAccount = req.body;
-
+  console.log(updatedAccount);
   db.Account.update(updatedAccount, {
     where: {
       UserId: UserId,
@@ -448,6 +448,7 @@ router.put("/api/user/:id/account/:accoutId", (req, res) => {
     }
   }).then(data => res.send(data))
 })
+
 // Update Order Information
 router.put("/api/order/:orderId", (req, res) => {
   const orderId = parseInt(req.params.accountId);
@@ -461,5 +462,31 @@ router.put("/api/order/:orderId", (req, res) => {
 })
 
 // ~~~~~DELETE~~~~~~
+// delete a Category
+router.delete("/api/category/:categoryid/delete", (req, res) => {
+  const categoryId = parseInt(req.params.categoryid);
 
+  db.Categories.destroy( { where: {id: categoryId}}).then(() => res.send(200))
+})
+
+//delete a order
+router.delete("/api/order/:orderid/delete", (req, res) => {
+  const orderId = parseInt(req.params.orderid);
+
+  db.Orders.destroy( { where: {id: orderId}}).then(() => res.send(200))
+})
+
+// delete a account
+router.delete("/api/account/:accountid/delete", (req, res) => {
+  const accountId = parseInt(req.params.accountid);
+
+  db.Account.destroy( { where: {id: accountId}}).then(() => res.send(200))
+})
+
+// delete a user
+router.delete("/api/user/:userid/delete", (req, res) => {
+  const userId = parseInt(req.params.userid);
+
+  db.Users.destroy( { where: {id: userId}}).then(() => res.send(200))
+})
 module.exports = router;

@@ -52,6 +52,7 @@ $(document).ready(function () {
       UserId: id
     }
     $.post("/api/orders/new", newItem).then(function (data) {
+      location.reload();
       console.log("order Submitted");
       console.log(data);
     });
@@ -60,5 +61,19 @@ $(document).ready(function () {
 
   
 
+
+  $("#account-submit").on("click", function () {
+    const amount = $("#accountamount").val();
+    const accountid = $("#remain-budget").data("id");
+    const UserId = $("#account-submit").data("value")
+
+    $.ajax({
+      method: "PUT",
+      url: `/api/user/${UserId}/account/${accountid}`,
+      data: {weeklyBudget: amount}
+    }).then(() => {
+      location.reload()
+    })
+  })
   
 });
