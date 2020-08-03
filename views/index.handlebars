@@ -59,6 +59,9 @@
                     <p class="center-align">
                         <button id="add-order-btn" class="waves-effect waves-light btn white modal-trigger blue-text text-darken-2" data-target="modal1">Add Order</button>
                     </p>
+                    <p class="center-align">
+                    <a class="waves-effect waves-light btn white modal-trigger blue-text text-darken-2" id  = "view-orders" data-value = "{{this.userId}}" href = "/view/orders/{{this.userId}}">View Orders</a>
+                    </p>
                     
                 </div>
             </div>
@@ -85,18 +88,7 @@
     </div>
 
 
-    <div class="row container">
-        <div>
-            <select class="browser-default col s12 m6 l4" id = "search-item-category">
-                <option value="" disabled selected>Search by your category</option>
-                {{#each this.categories}}
-                    <option value="{{this.id}}">{{this.name}}</option>
-                {{/each}}
-            </select>
-            <div id="items-table"></div>
-        </div>
-    </div>
-
+    
 
 </main>
 

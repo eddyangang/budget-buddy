@@ -13,10 +13,11 @@ router.get("/sign-up", function (req, res) {
 })
 
 router.get("/user/home", function (req, res) {
+  var id = userSignedIn.id;
   var data = {};
   db.Categories.findAll({
       where: {
-        UserId: userSignedIn.id,
+        UserId: id,
       }
     })
     .then((categories) => {
@@ -53,9 +54,9 @@ router.get("/user/home", function (req, res) {
           console.log(accountData);
           data.accountId = accountData[0].id;
           data.weeklyBudget = accountData[0].weeklyBudget;
-          data.weeklyBudgetUsed = accountData[0].weeklyBudgetUsed;;
+          data.weeklyBudgetUsed = accountData[0].weeklyBudgetUsed;
           data.budgetRemaining = parseFloat(accountData[0].weeklyBudget) - parseFloat(accountData[0].weeklyBudgetUsed);
-          res.render("index", data);
+          res.render("index",data)
         })
       })
     })
@@ -147,6 +148,33 @@ router.get("/view/categories/:id",function(req,res){
       res.render("category",data);
     })
 })
+
+router.get("/view/orders/:id",function(req,res){
+  var userId = req.params.id;
+  var data = {};
+  db.Categories.findAll({
+    where: {
+      UserId: userId,
+    }
+  })
+  .then((categories) => {
+    console.log(categories)
+    var cats = [];
+    for (var i = 0; i < categories.length; i++) {
+      var cat = {
+        name: categories[i].dataValues.name,
+        budget: categories[i].dataValues.budget,
+        budgetUsed: categories[i].dataValues.budgetUsed,
+        id: categories[i].dataValues.id
+      }
+      cats.push(cat);
+    }
+    data.categories = cats
+    res.render("orders",data);
+  })
+
+})
+
 // get a specific catefory for a user category
 router.get("/api/user/:id/category/:categoryID", (req, res) => {
   // get ID from request
@@ -388,6 +416,7 @@ router.post("/api/account/new", (req, res) => {
 
 router.post("/user", function (req, res) {
   userSignedIn = req.body;
+  console.log(userSignedIn);
   res.redirect("/user/home");
 })
 
